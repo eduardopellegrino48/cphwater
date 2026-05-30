@@ -5,14 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Air Copenhagen - Water Report</title>
     <style>
-        /* Importazione font Schibsted Grotesk con varianti di peso */
+        /* Importazione font Schibsted Grotesk */
         @import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap');
 
         :root {
             --brand-blue: #002db3; 
             --footer-blue: #7aa2ec; 
-            --flag-green: #25a725; 
-            --flag-red: #d32f2f;   
+            
+            /* Colori Bandiere Badevand.dk */
+            --flag-green: #2ea640;  /* God kvalitet */
+            --flag-red: #c9302c;    /* Dårlig kvalitet */
+            --flag-yellow: #eeb816; /* Ingen varsling */
+            --flag-grey: #a0a0a0;   /* Pt. lukket */
+            
             --white: #ffffff;
         }
 
@@ -20,7 +25,6 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            /* Applicazione del font richiesto e stringimento globale dei caratteri */
             font-family: 'Schibsted Grotesk', Arial, sans-serif;
             letter-spacing: -0.03em;
         }
@@ -45,7 +49,7 @@
         }
 
         /* =========================================
-           DATA IN ALTO A DESTRA
+           DATA DINAMICA IN ALTO A DESTRA
            ========================================= */
         #date-container {
             position: absolute;
@@ -58,16 +62,16 @@
         }
 
         #date-day {
-            font-size: 290px;
+            font-size: 260px; /* Leggermente ridotto */
             font-weight: 800;
-            letter-spacing: -14px;
+            letter-spacing: -12px;
             line-height: 0.75;
         }
 
         #date-month {
-            font-size: 145px;
+            font-size: 130px; /* Leggermente ridotto */
             font-weight: 800;
-            letter-spacing: -6px;
+            letter-spacing: -5px;
             line-height: 0.85;
             margin-top: 15px;
         }
@@ -101,47 +105,46 @@
         .spot-wrapper {
             position: absolute;
             display: flex;
-            /* Layout flessibile base, modificato poi per ogni nodo per evitare sovrapposizioni */
             flex-direction: column; 
-            gap: 10px; 
+            gap: 8px; /* Gap ridotto per compattare */
             align-items: flex-start;
         }
 
         .spot-label {
             background-color: var(--white);
             color: var(--brand-blue);
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 800;
             text-transform: uppercase;
-            padding: 6px 14px;
+            padding: 4px 12px;
             width: max-content;
             letter-spacing: -0.04em;
         }
 
         .spot-card {
             background-color: var(--white);
-            width: 140px;
-            border-left: 8px solid var(--flag-green);
-            padding: 12px 14px;
+            width: 125px; /* Box più stretto */
+            border-left: 8px solid var(--flag-green); /* Colore default */
+            padding: 10px 12px; /* Padding ridotto in altezza */
             color: var(--brand-blue);
         }
 
-        .status-bad {
-            border-left-color: var(--flag-red) !important;
-        }
+        /* CLASSI DINAMICHE PER MAKE (Stati Badevand.dk) */
+        .status-good { border-left-color: var(--flag-green) !important; }
+        .status-bad { border-left-color: var(--flag-red) !important; }
+        .status-warn { border-left-color: var(--flag-yellow) !important; }
+        .status-closed { border-left-color: var(--flag-grey) !important; }
 
         .card-title {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 900;
             letter-spacing: -1px;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             line-height: 1;
         }
 
-        .card-subtitle {
-            font-size: 7px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
+        /* Gruppo Acqua e Aria unito */
+        .data-group-core {
             margin-bottom: 8px;
         }
 
@@ -149,90 +152,69 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 3px;
-            font-size: 14px;
+            margin-bottom: 2px;
+            font-size: 13px;
         }
 
-        .card-data-row:last-child {
-            margin-bottom: 0;
+        /* Separatore visivo e spaziatura per il Vento */
+        .wind-row {
+            margin-top: 8px;
+            padding-top: 6px;
+            border-top: 1px solid rgba(0, 45, 179, 0.15); /* Linea sottile per staccare */
         }
 
-        .data-label {
-            font-weight: 500;
-        }
-
-        .data-value {
-            font-weight: 800;
-        }
+        .data-label { font-weight: 500; }
+        .data-value { font-weight: 800; }
 
         /* =========================================
            POSIZIONAMENTO E FLUSSO DEI VARI PUNTI
+           Coordinate riviste per evitare sovrapposizioni
            ========================================= */
         
-        #node-nordhavn { 
-            top: 12%; 
-            left: 36%; 
-            align-items: flex-end; /* Allinea label a destra rispetto alla card */
-        }
-
-        #node-refshaleoen { 
-            top: 25%; 
-            left: 51%; 
-        }
+        #node-nordhavn { top: 12%; left: 36%; align-items: flex-end; }
+        #node-refshaleoen { top: 25%; left: 51%; }
         
+        /* Indre By posizionato in modo da non toccare Islands Brygge */
         #node-indre-by { 
-            top: 38%; 
-            left: 26%; 
-            flex-direction: row; /* Label affiancata alla card a sinistra */
+            top: 36%; 
+            left: 20%; 
+            flex-direction: row; 
             align-items: flex-start;
-            gap: 15px;
+            gap: 12px;
         }
 
-        #node-islands-brygge { 
-            top: 50%; 
-            left: 24%; 
-        }
-
-        #node-amager { 
-            top: 57%; 
-            left: 65%; 
-            align-items: flex-end; /* Allinea label a destra rispetto alla card */
-        }
-
-        #node-kbh-sv { 
-            top: 64%; 
-            left: 3%; 
-            flex-direction: column-reverse; /* Label sotto la card */
-        }
+        #node-islands-brygge { top: 51%; left: 24%; }
+        #node-amager { top: 57%; left: 65%; align-items: flex-end; }
+        #node-kbh-sv { top: 66%; left: 3%; flex-direction: column-reverse; }
 
     </style>
 </head>
 <body>
     <div id="artboard">
         
-        <!-- DATA IN ALTO A DESTRA -->
+        <!-- DATA IN ALTO A DESTRA (Si aggiorna da sola con il Javascript a fondo pagina) -->
         <div id="date-container">
-            <div id="date-day">30</div>
-            <div id="date-month">MAY</div>
+            <div id="date-day">00</div>
+            <div id="date-month">MONTH</div>
         </div>
 
         <!-- NORDHAVN -->
         <div class="spot-wrapper" id="node-nordhavn">
             <div class="spot-label">NORDHAVN</div>
-            <div class="spot-card" id="card-nordhavn">
+            <!-- Cambia "status-good" con "status-bad", "status-warn" o "status-closed" da Make -->
+            <div class="spot-card status-good" id="card-nordhavn">
+                <!-- Testi suggeriti: GOOD, BAD, N/A, CLOSED -->
                 <div class="card-title" id="status-text-nordhavn">GOOD</div>
-                <div class="card-subtitle">TEMPERATURE:</div>
-                <div class="card-data-row">
-                    <span class="data-label">Water:</span>
-                    <span class="data-value" id="water-nordhavn">14°C</span>
+                <div class="data-group-core">
+                    <div class="card-data-row">
+                        <span class="data-label">Water:</span><span class="data-value" id="water-nordhavn">14°C</span>
+                    </div>
+                    <div class="card-data-row">
+                        <span class="data-label">Air:</span><span class="data-value" id="air-nordhavn">18°C</span>
+                    </div>
                 </div>
-                <div class="card-data-row">
-                    <span class="data-label">Air:</span>
-                    <span class="data-value" id="air-nordhavn">18°C</span>
-                </div>
-                <div class="card-data-row">
-                    <span class="data-label">Wind:</span>
-                    <span class="data-value" id="wind-nordhavn">6 m/s</span>
+                <div class="card-data-row wind-row">
+                    <span class="data-label">Wind:</span><span class="data-value" id="wind-nordhavn">6 m/s</span>
                 </div>
             </div>
         </div>
@@ -240,105 +222,65 @@
         <!-- REFSHALEØEN -->
         <div class="spot-wrapper" id="node-refshaleoen">
             <div class="spot-label">REFSHALEØEN</div>
-            <div class="spot-card" id="card-refshaleoen">
+            <div class="spot-card status-good" id="card-refshaleoen">
                 <div class="card-title" id="status-text-refshaleoen">GOOD</div>
-                <div class="card-subtitle">TEMPERATURE:</div>
-                <div class="card-data-row">
-                    <span class="data-label">Water:</span>
-                    <span class="data-value" id="water-refshaleoen">14°C</span>
+                <div class="data-group-core">
+                    <div class="card-data-row"><span class="data-label">Water:</span><span class="data-value" id="water-refshaleoen">14°C</span></div>
+                    <div class="card-data-row"><span class="data-label">Air:</span><span class="data-value" id="air-refshaleoen">18°C</span></div>
                 </div>
-                <div class="card-data-row">
-                    <span class="data-label">Air:</span>
-                    <span class="data-value" id="air-refshaleoen">18°C</span>
-                </div>
-                <div class="card-data-row">
-                    <span class="data-label">Wind:</span>
-                    <span class="data-value" id="wind-refshaleoen">6 m/s</span>
-                </div>
+                <div class="card-data-row wind-row"><span class="data-label">Wind:</span><span class="data-value" id="wind-refshaleoen">6 m/s</span></div>
             </div>
         </div>
 
         <!-- INDRE BY -->
         <div class="spot-wrapper" id="node-indre-by">
             <div class="spot-label">INDRE BY</div>
-            <div class="spot-card" id="card-indre-by">
+            <div class="spot-card status-good" id="card-indre-by">
                 <div class="card-title" id="status-text-indre-by">GOOD</div>
-                <div class="card-subtitle">TEMPERATURE:</div>
-                <div class="card-data-row">
-                    <span class="data-label">Water:</span>
-                    <span class="data-value" id="water-indre-by">14°C</span>
+                <div class="data-group-core">
+                    <div class="card-data-row"><span class="data-label">Water:</span><span class="data-value" id="water-indre-by">14°C</span></div>
+                    <div class="card-data-row"><span class="data-label">Air:</span><span class="data-value" id="air-indre-by">18°C</span></div>
                 </div>
-                <div class="card-data-row">
-                    <span class="data-label">Air:</span>
-                    <span class="data-value" id="air-indre-by">18°C</span>
-                </div>
-                <div class="card-data-row">
-                    <span class="data-label">Wind:</span>
-                    <span class="data-value" id="wind-indre-by">6 m/s</span>
-                </div>
+                <div class="card-data-row wind-row"><span class="data-label">Wind:</span><span class="data-value" id="wind-indre-by">6 m/s</span></div>
             </div>
         </div>
 
         <!-- ISLANDS BRYGGE -->
         <div class="spot-wrapper" id="node-islands-brygge">
             <div class="spot-label">ISLANDS BRYGGE</div>
-            <div class="spot-card" id="card-islands-brygge">
+            <div class="spot-card status-good" id="card-islands-brygge">
                 <div class="card-title" id="status-text-islands-brygge">GOOD</div>
-                <div class="card-subtitle">TEMPERATURE:</div>
-                <div class="card-data-row">
-                    <span class="data-label">Water:</span>
-                    <span class="data-value" id="water-islands-brygge">14°C</span>
+                <div class="data-group-core">
+                    <div class="card-data-row"><span class="data-label">Water:</span><span class="data-value" id="water-islands-brygge">14°C</span></div>
+                    <div class="card-data-row"><span class="data-label">Air:</span><span class="data-value" id="air-islands-brygge">18°C</span></div>
                 </div>
-                <div class="card-data-row">
-                    <span class="data-label">Air:</span>
-                    <span class="data-value" id="air-islands-brygge">18°C</span>
-                </div>
-                <div class="card-data-row">
-                    <span class="data-label">Wind:</span>
-                    <span class="data-value" id="wind-islands-brygge">6 m/s</span>
-                </div>
+                <div class="card-data-row wind-row"><span class="data-label">Wind:</span><span class="data-value" id="wind-islands-brygge">6 m/s</span></div>
             </div>
         </div>
 
         <!-- AMAGER STRANDPARK -->
         <div class="spot-wrapper" id="node-amager">
             <div class="spot-label">AMAGER STRANDPARK</div>
-            <div class="spot-card" id="card-amager">
+            <div class="spot-card status-good" id="card-amager">
                 <div class="card-title" id="status-text-amager">GOOD</div>
-                <div class="card-subtitle">TEMPERATURE:</div>
-                <div class="card-data-row">
-                    <span class="data-label">Water:</span>
-                    <span class="data-value" id="water-amager">14°C</span>
+                <div class="data-group-core">
+                    <div class="card-data-row"><span class="data-label">Water:</span><span class="data-value" id="water-amager">14°C</span></div>
+                    <div class="card-data-row"><span class="data-label">Air:</span><span class="data-value" id="air-amager">18°C</span></div>
                 </div>
-                <div class="card-data-row">
-                    <span class="data-label">Air:</span>
-                    <span class="data-value" id="air-amager">18°C</span>
-                </div>
-                <div class="card-data-row">
-                    <span class="data-label">Wind:</span>
-                    <span class="data-value" id="wind-amager">6 m/s</span>
-                </div>
+                <div class="card-data-row wind-row"><span class="data-label">Wind:</span><span class="data-value" id="wind-amager">6 m/s</span></div>
             </div>
         </div>
 
         <!-- KØBENHAVN SV -->
         <div class="spot-wrapper" id="node-kbh-sv">
             <div class="spot-label">KØBENHAVN SV</div>
-            <div class="spot-card" id="card-kbh-sv">
+            <div class="spot-card status-good" id="card-kbh-sv">
                 <div class="card-title" id="status-text-kbh-sv">GOOD</div>
-                <div class="card-subtitle">TEMPERATURE:</div>
-                <div class="card-data-row">
-                    <span class="data-label">Water:</span>
-                    <span class="data-value" id="water-kbh-sv">14°C</span>
+                <div class="data-group-core">
+                    <div class="card-data-row"><span class="data-label">Water:</span><span class="data-value" id="water-kbh-sv">14°C</span></div>
+                    <div class="card-data-row"><span class="data-label">Air:</span><span class="data-value" id="air-kbh-sv">18°C</span></div>
                 </div>
-                <div class="card-data-row">
-                    <span class="data-label">Air:</span>
-                    <span class="data-value" id="air-kbh-sv">18°C</span>
-                </div>
-                <div class="card-data-row">
-                    <span class="data-label">Wind:</span>
-                    <span class="data-value" id="wind-kbh-sv">6 m/s</span>
-                </div>
+                <div class="card-data-row wind-row"><span class="data-label">Wind:</span><span class="data-value" id="wind-kbh-sv">6 m/s</span></div>
             </div>
         </div>
 
@@ -348,5 +290,23 @@
         </div>
 
     </div>
+
+    <!-- SCRIPT PER AGGIORNAMENTO DATA AUTOMATICO -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const today = new Date();
+            
+            // Estrae il giorno aggiungendo lo zero iniziale se necessario (es. "05")
+            const day = String(today.getDate()).padStart(2, '0');
+            
+            // Array con i nomi dei mesi in inglese
+            const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+            const month = monthNames[today.getMonth()];
+            
+            // Inietta i valori nell'HTML
+            document.getElementById("date-day").innerText = day;
+            document.getElementById("date-month").innerText = month;
+        });
+    </script>
 </body>
 </html>

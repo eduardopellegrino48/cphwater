@@ -12,8 +12,6 @@
             --brand-blue: #002db3;
             --footer-blue: #7aa2ec;
             --flag-green: #2ea640;
-            --flag-red: #c9302c;
-            --flag-yellow: #eeb816;
             --flag-grey: #a0a0a0;
             --white: #ffffff;
         }
@@ -91,10 +89,10 @@
         }
 
         #payoff-text {
-            font-size: 58px;
+            font-size: 56px;
             font-weight: 500;
             color: var(--white);
-            line-height: 1.05;
+            line-height: 1.04;
             letter-spacing: -2px;
         }
 
@@ -126,7 +124,7 @@
 
         .spot-card {
             background-color: var(--white);
-            width: 132px;
+            width: 148px;
             border-left: 8px solid var(--flag-grey);
             padding: 8px 12px;
             color: var(--brand-blue);
@@ -136,24 +134,18 @@
             border-left-color: var(--flag-green) !important;
         }
 
-        .status-bad {
-            border-left-color: var(--flag-red) !important;
-        }
-
-        .status-warn {
-            border-left-color: var(--flag-yellow) !important;
-        }
-
         .status-closed {
             border-left-color: var(--flag-grey) !important;
         }
 
         .card-title {
-            font-size: 24px;
+            font-size: 17px;
             font-weight: 900;
-            letter-spacing: -1px;
-            margin-bottom: 6px;
+            letter-spacing: -0.8px;
+            margin-bottom: 7px;
             line-height: 1;
+            text-transform: uppercase;
+            white-space: nowrap;
         }
 
         .card-data-row {
@@ -171,31 +163,14 @@
         }
 
         .data-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
             font-weight: 500;
             line-height: 1;
-        }
-
-        .data-label svg {
-            fill: currentColor;
-            flex: 0 0 auto;
-            display: block;
-        }
-
-        .icon-temp {
-            width: 11px;
-            height: 11px;
-        }
-
-        .icon-wind {
-            width: 13px;
-            height: 13px;
+            white-space: nowrap;
         }
 
         .data-value {
             font-weight: 800;
+            white-space: nowrap;
         }
 
         #node-nordhavn {
@@ -237,23 +212,6 @@
 </head>
 
 <body>
-    <svg width="0" height="0" style="position:absolute; visibility:hidden;" aria-hidden="true">
-        <symbol id="icon-temperature" viewBox="0 0 32 32">
-            <path d="M11,30.079c0,0 -0.022,0 -0.03,0c-2.746,-0.016 -4.97,-2.25 -4.97,-5c-0,-1.629 0.78,-3.077 1.988,-3.99l-0,-16.07c-0,-1.66 1.347,-3.007 3.006,-3.007c1.659,0 3.006,1.347 3.006,3.007c-0,-0 -0,16.061 -0,16.061c1.214,0.912 2,2.365 2,3.999c0,2.717 -2.171,4.93 -4.871,4.999l-0.129,0.001m0,-2c1.656,0 3,-1.344 3,-3c0,-1.11 -0.604,-2.079 -1.501,-2.598c-0.309,-0.179 -0.499,-0.509 -0.499,-0.866l0,-16.596c0,-0.556 -0.451,-1.007 -1.006,-1.007c-0.556,0 -1.006,0.451 -1.006,1.007l-0,16.603c-0,0.356 -0.189,0.685 -0.496,0.864c-0.892,0.52 -1.492,1.487 -1.492,2.593c0,1.65 1.335,2.991 2.983,3c0.001,0 0.003,0 0.004,0"/>
-            <path d="M17.006,8l7.994,0.001c0.552,0 1,-0.448 1,-1c0,-0.552 -0.448,-1 -1,-1l-7.993,-0.001c-0.552,-0 -1,0.448 -1.001,1c0,0.552 0.448,1 1,1Z"/>
-            <path d="M17.006,11.987l6.217,0.001c0.552,-0 1.001,-0.448 1.001,-1c-0,-0.552 -0.448,-1 -1,-1l-6.217,-0.001c-0.552,-0 -1,0.448 -1.001,0.999c0,0.552 0.448,1.001 1,1.001Z"/>
-            <path d="M17.006,15.973l7.994,0.001c0.552,0 1,-0.448 1,-1c0,-0.552 -0.448,-1 -1,-1l-7.993,-0.001c-0.552,0 -1,0.448 -1.001,1c0,0.552 0.448,1 1,1Z"/>
-            <path d="M17.006,19.96l6.217,0.001c0.552,-0 1.001,-0.448 1.001,-1c-0,-0.552 -0.448,-1 -1,-1l-6.217,-0.001c-0.552,-0 -1,0.448 -1.001,1c0,0.552 0.448,1 1,1Z"/>
-            <circle cx="11.001" cy="25.008" r="1"/>
-        </symbol>
-
-        <symbol id="icon-wind" viewBox="0 -1 28 28">
-            <g transform="translate(-466.000000, -830.000000)">
-                <path d="M488,844 L467,844 C466.447,844 466,844.447 466,845 C466,845.553 466.447,846 467,846 L486.833,846 C489.687,846 492,847.791 492,850 C492,852.209 490.291,854 486,854 L486,856 L488,856 C491.313,856 494,853.313 494,850 C494,846.687 491.313,844 488,844 L488,844 Z M480.002,848 L480,848 L472,848 C471.447,848 471,848.448 471,849 C471,849.553 471.447,850 472,850 L480,850 C481.104,850 482,850.896 482,852 C482,853.104 481.104,854 480,854 L480,856 C482.209,856 484,854.209 484,852 C484,849.792 482.21,848.002 480.002,848 L480.002,848 Z M475,838 L487,838 C487.553,838 488,837.553 488,837 C488,836.448 487.553,836 487,836 L475,836 C474.447,836 474,836.448 474,837 C474,837.553 474.447,838 475,838 L475,838 Z M470,842 L488,842 C491.313,842 494,839.313 494,836 C494,832.687 491.313,830 488,830 L488,832 C490.822,832.531 492,833.791 492,836 C492,838.209 489.687,840 486.833,840 L470,840 C469.447,840 469,840.448 469,841 C469,841.553 469.447,842 470,842 L470,842 Z"/>
-            </g>
-        </symbol>
-    </svg>
-
     <div id="artboard">
 
         <div id="date-container">
@@ -264,29 +222,17 @@
         <div class="spot-wrapper" id="node-nordhavn">
             <div class="spot-label">NORDHAVN</div>
             <div class="spot-card" id="card-nordhavn">
-                <div class="card-title" id="status-nordhavn">...</div>
-
+                <div class="card-title" id="status-nordhavn">NORDHAVN</div>
                 <div class="card-data-row">
-                    <span class="data-label">
-                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
-                        Water
-                    </span>
+                    <span class="data-label">Water temp.</span>
                     <span class="data-value" id="water-nordhavn">--°C</span>
                 </div>
-
                 <div class="card-data-row">
-                    <span class="data-label">
-                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
-                        Air
-                    </span>
+                    <span class="data-label">Air temp.</span>
                     <span class="data-value" id="air-nordhavn">--°C</span>
                 </div>
-
                 <div class="card-data-row wind-row">
-                    <span class="data-label">
-                        <svg class="icon-wind"><use href="#icon-wind"></use></svg>
-                        Wind
-                    </span>
+                    <span class="data-label">Wind</span>
                     <span class="data-value" id="wind-nordhavn">-- m/s</span>
                 </div>
             </div>
@@ -295,29 +241,17 @@
         <div class="spot-wrapper" id="node-refshaleoen">
             <div class="spot-label">REFSHALEØEN</div>
             <div class="spot-card" id="card-refshaleoen">
-                <div class="card-title" id="status-refshaleoen">...</div>
-
+                <div class="card-title" id="status-refshaleoen">REFSHALEØEN</div>
                 <div class="card-data-row">
-                    <span class="data-label">
-                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
-                        Water
-                    </span>
+                    <span class="data-label">Water temp.</span>
                     <span class="data-value" id="water-refshaleoen">--°C</span>
                 </div>
-
                 <div class="card-data-row">
-                    <span class="data-label">
-                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
-                        Air
-                    </span>
+                    <span class="data-label">Air temp.</span>
                     <span class="data-value" id="air-refshaleoen">--°C</span>
                 </div>
-
                 <div class="card-data-row wind-row">
-                    <span class="data-label">
-                        <svg class="icon-wind"><use href="#icon-wind"></use></svg>
-                        Wind
-                    </span>
+                    <span class="data-label">Wind</span>
                     <span class="data-value" id="wind-refshaleoen">-- m/s</span>
                 </div>
             </div>
@@ -326,29 +260,17 @@
         <div class="spot-wrapper" id="node-indre-by">
             <div class="spot-label">INDRE BY</div>
             <div class="spot-card" id="card-indre-by">
-                <div class="card-title" id="status-indre-by">...</div>
-
+                <div class="card-title" id="status-indre-by">INDRE BY</div>
                 <div class="card-data-row">
-                    <span class="data-label">
-                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
-                        Water
-                    </span>
+                    <span class="data-label">Water temp.</span>
                     <span class="data-value" id="water-indre-by">--°C</span>
                 </div>
-
                 <div class="card-data-row">
-                    <span class="data-label">
-                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
-                        Air
-                    </span>
+                    <span class="data-label">Air temp.</span>
                     <span class="data-value" id="air-indre-by">--°C</span>
                 </div>
-
                 <div class="card-data-row wind-row">
-                    <span class="data-label">
-                        <svg class="icon-wind"><use href="#icon-wind"></use></svg>
-                        Wind
-                    </span>
+                    <span class="data-label">Wind</span>
                     <span class="data-value" id="wind-indre-by">-- m/s</span>
                 </div>
             </div>
@@ -357,29 +279,17 @@
         <div class="spot-wrapper" id="node-islands-brygge">
             <div class="spot-label">ISLANDS BRYGGE</div>
             <div class="spot-card" id="card-islands-brygge">
-                <div class="card-title" id="status-islands-brygge">...</div>
-
+                <div class="card-title" id="status-islands-brygge">ISLANDS BRYGGE</div>
                 <div class="card-data-row">
-                    <span class="data-label">
-                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
-                        Water
-                    </span>
+                    <span class="data-label">Water temp.</span>
                     <span class="data-value" id="water-islands-brygge">--°C</span>
                 </div>
-
                 <div class="card-data-row">
-                    <span class="data-label">
-                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
-                        Air
-                    </span>
+                    <span class="data-label">Air temp.</span>
                     <span class="data-value" id="air-islands-brygge">--°C</span>
                 </div>
-
                 <div class="card-data-row wind-row">
-                    <span class="data-label">
-                        <svg class="icon-wind"><use href="#icon-wind"></use></svg>
-                        Wind
-                    </span>
+                    <span class="data-label">Wind</span>
                     <span class="data-value" id="wind-islands-brygge">-- m/s</span>
                 </div>
             </div>
@@ -388,29 +298,17 @@
         <div class="spot-wrapper" id="node-amager">
             <div class="spot-label">AMAGER STRANDPARK</div>
             <div class="spot-card" id="card-amager">
-                <div class="card-title" id="status-amager">...</div>
-
+                <div class="card-title" id="status-amager">AMAGER</div>
                 <div class="card-data-row">
-                    <span class="data-label">
-                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
-                        Water
-                    </span>
+                    <span class="data-label">Water temp.</span>
                     <span class="data-value" id="water-amager">--°C</span>
                 </div>
-
                 <div class="card-data-row">
-                    <span class="data-label">
-                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
-                        Air
-                    </span>
+                    <span class="data-label">Air temp.</span>
                     <span class="data-value" id="air-amager">--°C</span>
                 </div>
-
                 <div class="card-data-row wind-row">
-                    <span class="data-label">
-                        <svg class="icon-wind"><use href="#icon-wind"></use></svg>
-                        Wind
-                    </span>
+                    <span class="data-label">Wind</span>
                     <span class="data-value" id="wind-amager">-- m/s</span>
                 </div>
             </div>
@@ -419,29 +317,17 @@
         <div class="spot-wrapper" id="node-kbh-sv">
             <div class="spot-label">KØBENHAVN SV</div>
             <div class="spot-card" id="card-kbh-sv">
-                <div class="card-title" id="status-kbh-sv">...</div>
-
+                <div class="card-title" id="status-kbh-sv">KØBENHAVN SV</div>
                 <div class="card-data-row">
-                    <span class="data-label">
-                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
-                        Water
-                    </span>
+                    <span class="data-label">Water temp.</span>
                     <span class="data-value" id="water-kbh-sv">--°C</span>
                 </div>
-
                 <div class="card-data-row">
-                    <span class="data-label">
-                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
-                        Air
-                    </span>
+                    <span class="data-label">Air temp.</span>
                     <span class="data-value" id="air-kbh-sv">--°C</span>
                 </div>
-
                 <div class="card-data-row wind-row">
-                    <span class="data-label">
-                        <svg class="icon-wind"><use href="#icon-wind"></use></svg>
-                        Wind
-                    </span>
+                    <span class="data-label">Wind</span>
                     <span class="data-value" id="wind-kbh-sv">-- m/s</span>
                 </div>
             </div>
@@ -463,6 +349,61 @@
             { id: "kbh-sv", label: "KØBENHAVN SV", lat: 55.6471, lon: 12.5442 }
         ];
 
+        const FOOTER_LINES = {
+            early: [
+                ["City is still asleep.", "The water is wide awake."],
+                ["First light at the harbor.", "Beat the city traffic."],
+                ["Morning routines just got better.", "Dive into the blue."],
+                ["Reset your system.", "Morning plunge recommended."],
+                ["Start sharp.", "Cold water, clear focus."],
+                ["Zero emails, pure water.", "Prioritize your morning."]
+            ],
+            evening: [
+                ["Screen time is over.", "Harbor time begins."],
+                ["Log off and dive in.", "The perfect post-work reset."],
+                ["Sunset incoming.", "Secure your spot on the docks."],
+                ["Wash off the workday.", "Nordhavn is waiting."],
+                ["Golden hour hits different.", "Enjoy the evening swim."],
+                ["Close the laptop.", "The water is calling your name."]
+            ],
+            food: [
+                ["Swim hard, eat well.", "Time for some serious carbs."],
+                ["Earn your bakery run.", "Morning dip completed."],
+                ["Cold water, hot coffee.", "The Copenhagen survival kit."],
+                ["Salt on your skin.", "Ready for a fresh slice."],
+                ["The post-swim hunger is real.", "Go grab that pastry."],
+                ["Fuel up after the plunge.", "City treats await."]
+            ],
+            data: [
+                ["System update:", "Conditions are loaded for today."],
+                ["Data confirmed.", "Harbor conditions are online."],
+                ["Vitals look good.", "Water temperature holding steady."],
+                ["Sensors synced.", "Copenhagen is ready."],
+                ["Sync with the Baltic.", "All signals point to the water."]
+            ],
+            summer: [
+                ["Almost feels like the Mediterranean.", "Don't waste this day."],
+                ["Peak Nordic summer.", "The docks will be packed."],
+                ["Crystal clear and warming up.", "Summer is showing off."],
+                ["Towels on the concrete.", "The Copenhagen Riviera is open."],
+                ["No jacket required.", "Straight into the harbor."]
+            ],
+            winter: [
+                ["Ice on the edges.", "Fire in the veins."],
+                ["System shock therapy.", "Enter the freezing water."],
+                ["Single digit temperatures.", "Maximum adrenaline output."],
+                ["Step out of the comfort zone.", "The ice water is waiting."],
+                ["Thermal shock incoming.", "Only the dedicated swim today."]
+            ],
+            moody: [
+                ["Atmospheric conditions: moody.", "Swim anyway."],
+                ["Water falls from the sky and fills the sea.", "Embrace the grey."],
+                ["A little wind builds character.", "See you on the edge."],
+                ["Nordic weather at its finest.", "Don't let the drizzle stop you."],
+                ["Choppy surface, deep calm.", "Dive under the grey skies."]
+            ]
+        };
+
         function setDate() {
             const now = new Date();
             const dayEl = document.getElementById("date-day");
@@ -480,7 +421,6 @@
 
             requestAnimationFrame(() => {
                 monthEl.style.transform = "scaleX(1)";
-
                 const dayWidth = dayEl.getBoundingClientRect().width;
                 const monthWidth = monthEl.getBoundingClientRect().width;
 
@@ -537,7 +477,7 @@
         }
 
         async function fetchSpot(spot) {
-            const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${spot.lat}&longitude=${spot.lon}&current=temperature_2m,wind_speed_10m&wind_speed_unit=ms&timezone=Europe%2FCopenhagen&forecast_days=1`;
+            const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${spot.lat}&longitude=${spot.lon}&current=temperature_2m,wind_speed_10m,precipitation,weather_code&wind_speed_unit=ms&timezone=Europe%2FCopenhagen&forecast_days=1`;
             const marineUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${spot.lat}&longitude=${spot.lon}&current=sea_surface_temperature,wave_height&timezone=Europe%2FCopenhagen&cell_selection=nearest&forecast_days=1`;
 
             const [weather, marine] = await Promise.allSettled([
@@ -568,13 +508,14 @@
                 marine_grid_longitude: marineData?.longitude ?? null,
                 air_temperature: weatherData?.current?.temperature_2m ?? null,
                 wind_speed: weatherData?.current?.wind_speed_10m ?? null,
+                precipitation: weatherData?.current?.precipitation ?? null,
+                weather_code: weatherData?.current?.weather_code ?? null,
                 water_temperature: waterTemp,
                 weather_ok: weather.status === "fulfilled",
                 marine_ok: marine.status === "fulfilled"
             };
 
             console.log("SPOT DATA", result);
-
             return result;
         }
 
@@ -590,49 +531,78 @@
             const hasAnyData = data.weather_ok || data.marine_ok;
 
             card.className = hasAnyData ? "spot-card status-good" : "spot-card status-closed";
-            status.innerText = hasAnyData ? "LIVE" : "N/A";
+            status.innerText = data.label;
             water.innerText = formatTemp(data.water_temperature);
             air.innerText = formatTemp(data.air_temperature);
             wind.innerText = formatWind(data.wind_speed);
+        }
+
+        function dailyIndex(length) {
+            if (!length) return 0;
+
+            const now = new Date();
+            const key = new Intl.DateTimeFormat("sv-SE", {
+                timeZone: "Europe/Copenhagen",
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit"
+            }).format(now);
+
+            let hash = 0;
+
+            for (let i = 0; i < key.length; i++) {
+                hash = (hash * 31 + key.charCodeAt(i)) >>> 0;
+            }
+
+            return hash % length;
+        }
+
+        function pickFooterCategory(avgWater, avgAir, avgWind, avgPrecipitation) {
+            const hour = Number(new Intl.DateTimeFormat("en-GB", {
+                timeZone: "Europe/Copenhagen",
+                hour: "2-digit",
+                hour12: false
+            }).format(new Date()));
+
+            if (avgPrecipitation !== null && avgPrecipitation > 0.1) return "moody";
+            if (avgWind !== null && avgWind >= 8) return "moody";
+            if (avgWater !== null && avgWater < 5) return "winter";
+            if (avgAir !== null && avgAir >= 20) return "summer";
+            if (hour >= 6 && hour <= 9) return "early";
+            if (hour >= 16 && hour <= 21) return "evening";
+            if (hour >= 11 && hour <= 14) return "food";
+
+            return "data";
         }
 
         function updateFooter(results) {
             const payoff = document.getElementById("payoff-text");
             const source = document.getElementById("source-text");
 
-            const validWater = results
-                .map(r => round1(r.water_temperature))
-                .filter(v => v !== null);
-
-            const validAir = results
-                .map(r => round1(r.air_temperature))
-                .filter(v => v !== null);
+            const validWater = results.map(r => round1(r.water_temperature)).filter(v => v !== null);
+            const validAir = results.map(r => round1(r.air_temperature)).filter(v => v !== null);
+            const validWind = results.map(r => round1(r.wind_speed)).filter(v => v !== null);
+            const validPrecipitation = results.map(r => round1(r.precipitation)).filter(v => v !== null);
 
             const ok = results.filter(r => r.weather_ok || r.marine_ok).length;
 
             if (ok === 0) {
                 payoff.innerHTML = "Live data unavailable.<br>Please check the data source.";
-                source.innerText = "Open browser console for API errors.";
+                source.innerText = "Source: Open-Meteo Forecast API + Marine API · Average water temperature: --°C";
                 return;
             }
 
-            const avgWater = validWater.length
-                ? validWater.reduce((a, b) => a + b, 0) / validWater.length
-                : null;
+            const avgWater = validWater.length ? validWater.reduce((a, b) => a + b, 0) / validWater.length : null;
+            const avgAir = validAir.length ? validAir.reduce((a, b) => a + b, 0) / validAir.length : null;
+            const avgWind = validWind.length ? validWind.reduce((a, b) => a + b, 0) / validWind.length : null;
+            const avgPrecipitation = validPrecipitation.length ? validPrecipitation.reduce((a, b) => a + b, 0) / validPrecipitation.length : null;
 
-            const avgAir = validAir.length
-                ? validAir.reduce((a, b) => a + b, 0) / validAir.length
-                : null;
+            const category = pickFooterCategory(avgWater, avgAir, avgWind, avgPrecipitation);
+            const lines = FOOTER_LINES[category] || FOOTER_LINES.data;
+            const chosen = lines[dailyIndex(lines.length)];
 
-            if (avgWater !== null && avgAir !== null) {
-                payoff.innerHTML = `Copenhagen water update.<br>Avg. water ${formatTemp(avgWater)} · air ${formatTemp(avgAir)}.`;
-            } else if (avgAir !== null) {
-                payoff.innerHTML = `Copenhagen weather update.<br>Avg. air ${formatTemp(avgAir)}.`;
-            } else {
-                payoff.innerHTML = "Copenhagen live update.<br>Weather data loaded.";
-            }
-
-            source.innerText = `Live coordinates: ${ok}/6 · Source: Open-Meteo Forecast API + Marine API`;
+            payoff.innerHTML = `${chosen[0]}<br>${chosen[1]}`;
+            source.innerText = `Source: Open-Meteo Forecast API + Marine API · Average water temperature: ${formatTemp(avgWater)}`;
         }
 
         async function load() {
@@ -650,12 +620,14 @@
                 SPOTS.forEach(spot => {
                     updateCard({
                         id: spot.id,
+                        label: spot.label,
                         weather_ok: false,
                         marine_ok: false
                     });
                 });
 
                 document.getElementById("payoff-text").innerHTML = "Live data unavailable.<br>Please check the data source.";
+                document.getElementById("source-text").innerText = "Source: Open-Meteo Forecast API + Marine API · Average water temperature: --°C";
             }
         }
 

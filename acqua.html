@@ -272,76 +272,83 @@
     </div>
 
     <script>
-        // Mappa delle stazioni associate agli ID dell'API
-        const stations = [
-            { id: 1116, name: 'nordhavn' },
-            { id: 1115, name: 'refshaleoen' },
-            { id: 1111, name: 'indre-by' }, // Condivide i dati con Islands Brygge
-            { id: 630,  name: 'amager' },
-            { id: 1112, name: 'kbh-sv' }
-        ];
+      // Mappa delle stazioni associate agli ID dell'API
+const stations = [
+    { id: 1116, name: 'nordhavn' },
+    { id: 1115, name: 'refshaleoen' },
+    { id: 1111, name: 'indre-by' }, 
+    { id: 630,  name: 'amager' },
+    { id: 1112, name: 'kbh-sv' }
+];
 
-        // Funzione per convertire il codice bandiera danese in inglese corto e stile CSS
-        function translateStatus(code) {
-            switch(code) {
-                case 'G': return { text: 'GOOD', class: 'status-good' };
-                case 'R': return { text: 'BAD', class: 'status-bad' };
-                case 'Y': return { text: 'WARN', class: 'status-warn' };
-                case 'Gray': return { text: 'CLOSED', class: 'status-closed' };
-                default: return { text: 'N/A', class: 'status-closed' };
-            }
-        }
+// Funzione per convertire il codice bandiera
+function translateStatus(code) {
+    switch(code) {
+        case 'G': return { text: 'GOOD', class: 'status-good' };
+        case 'R': return { text: 'BAD', class: 'status-bad' };
+        case 'Y': return { text: 'WARN', class: 'status-warn' };
+        case 'Gray': return { text: 'CLOSED', class: 'status-closed' };
+        default: return { text: 'N/A', class: 'status-closed' };
+    }
+}
 
-        document.addEventListener("DOMContentLoaded", function() {
-            // 1. GESTIONE DELLA DATA AUTOMATICA
-            const today = new Date();
-            const day = String(today.getDate()).padStart(2, '0');
-            const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-            document.getElementById("date-day").innerText = day;
-            document.getElementById("date-month").innerText = monthNames[today.getMonth()];
+document.addEventListener("DOMContentLoaded", function() {
+    // 1. GESTIONE DELLA DATA AUTOMATICA
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0');
+    const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    document.getElementById("date-day").innerText = day;
+    document.getElementById("date-month").innerText = monthNames[today.getMonth()];
 
-            // 2. CHIAMATE API DIRETTE A BADEVAND.DK
-            stations.forEach(station => {
-                fetch(`https://www.badevand.dk/api/v1/stations/${station.id}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const statusUpdate = translateStatus(data.prognosis_color);
-                        
-                        // Assegnazione dati e classi ai box specifici
-                        const card = document.getElementById(`card-${station.id}`);
-                        if(card) {
-                            card.className = `spot-card ${statusUpdate.class}`;
-                            document.getElementById(`status-${station.id}`).innerText = statusUpdate.text;
-                            document.getElementById(`water-${station.id}`).innerText = Math.round(data.water_temperature) + '°C';
-                            document.getElementById(`air-${station.id}`).innerText = Math.round(data.air_temperature) + '°C';
-                            document.getElementById(`wind-${station.id}`).innerText = Math.round(data.wind_speed) + ' m/s';
-                        }
+    // 2. CHIAMATE API TRAMITE PROXY CORS PER AGGIRARE IL BLOCCO DEL BROWSER
+    stations.forEach(station => {
+        // Creiamo l'URL passando tramite corsproxy.io
+        const targetUrl = encodeURIComponent(`https://www.badevand.dk/api/v1/stations/${station.id}`);
+        const proxyUrl = `https://corsproxy.io/?${targetUrl}`;
 
-                        // Gestione speciale duplicata per Islands Brygge che usa lo stesso id (1111) di Indre by
-                        if(station.id === 1111) {
-                            const ibCard = document.getElementById('card-islands');
-                            ibCard.className = `spot-card ${statusUpdate.class}`;
-                            document.getElementById('status-islands').innerText = statusUpdate.text;
-                            document.getElementById('water-islands').innerText = Math.round(data.water_temperature) + '°C';
-                            document.getElementById('air-islands').innerText = Math.round(data.air_temperature) + '°C';
-                            document.getElementById('wind-islands').innerText = Math.round(data.wind_speed) + ' m/s';
-                        }
+        fetch(proxyUrl)
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                const statusUpdate = translateStatus(data.prognosis_color);
+                
+                // Assegnazione dati e classi
+                const card = document.getElementById(`card-${station.id}`);
+                if(card) {
+                    card.className = `spot-card ${statusUpdate.class}`;
+                    document.getElementById(`status-${station.id}`).innerText = statusUpdate.text;
+                    document.getElementById(`water-${station.id}`).innerText = Math.round(data.water_temperature) + '°C';
+                    document.getElementById(`air-${station.id}`).innerText = Math.round(data.air_temperature) + '°C';
+                    document.getElementById(`wind-${station.id}`).innerText = Math.round(data.wind_speed) + ' m/s';
+                }
 
-                        // Aggiorna dinamicamente il payoff in base allo stato di Amager Strandpark
-                        if(station.id === 630) {
-                            const payoffEl = document.getElementById('payoff-text');
-                            if(data.prognosis_color === 'G') {
-                                payoffEl.innerHTML = "Amager Strand is calling.<br>The water is pristine!";
-                            } else if(data.prognosis_color === 'R') {
-                                payoffEl.innerHTML = "Skip the swim today.<br>Canals are currently restricted.";
-                            } else {
-                                payoffEl.innerHTML = "Check local flags.<br>Take care near the Baltic today.";
-                            }
-                        }
-                    })
-                    .catch(err => console.error("Error fetching station " + station.id, err));
-            });
-        });
+                // Gestione duplicata per Islands Brygge (id 1111 condiviso)
+                if(station.id === 1111) {
+                    const ibCard = document.getElementById('card-islands');
+                    ibCard.className = `spot-card ${statusUpdate.class}`;
+                    document.getElementById('status-islands').innerText = statusUpdate.text;
+                    document.getElementById('water-islands').innerText = Math.round(data.water_temperature) + '°C';
+                    document.getElementById('air-islands').innerText = Math.round(data.air_temperature) + '°C';
+                    document.getElementById('wind-islands').innerText = Math.round(data.wind_speed) + ' m/s';
+                }
+
+                // Aggiorna dinamicamente il payoff in base ad Amager
+                if(station.id === 630) {
+                    const payoffEl = document.getElementById('payoff-text');
+                    if(data.prognosis_color === 'G') {
+                        payoffEl.innerHTML = "Amager Strand is calling.<br>The water is pristine!";
+                    } else if(data.prognosis_color === 'R') {
+                        payoffEl.innerHTML = "Skip the swim today.<br>Canals are currently restricted.";
+                    } else {
+                        payoffEl.innerHTML = "Check local flags.<br>Take care near the Baltic today.";
+                    }
+                }
+            })
+            .catch(err => console.error("Error fetching station " + station.id, err));
+    });
+});
     </script>
 </body>
 </html>

@@ -44,9 +44,26 @@
             overflow: hidden;
         }
 
+        #top-header {
+            position: absolute;
+            top: 60px;
+            left: 60px;
+            right: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            color: var(--date-blue);
+            font-size: 32px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
         #date-container {
             position: absolute;
-            top: 78px;
+            top: 130px;
             left: 60px;
             right: 60px;
             color: var(--date-blue);
@@ -224,6 +241,11 @@
 
 <body>
     <div id="artboard">
+
+        <div id="top-header">
+            <span>Copenhagen Water Index</span>
+            <span id="year">2026</span>
+        </div>
 
         <div id="date-container">
             <div id="date-day">--</div>
@@ -478,6 +500,7 @@
             const now = new Date();
             const dayEl = document.getElementById("date-day");
             const monthEl = document.getElementById("date-month");
+            const yearEl = document.getElementById("year");
 
             dayEl.innerText = new Intl.DateTimeFormat("en-GB", {
                 timeZone: "Europe/Copenhagen",
@@ -487,6 +510,11 @@
             monthEl.innerText = new Intl.DateTimeFormat("en-GB", {
                 timeZone: "Europe/Copenhagen",
                 month: "2-digit"
+            }).format(now);
+
+            yearEl.innerText = new Intl.DateTimeFormat("en-GB", {
+                timeZone: "Europe/Copenhagen",
+                year: "numeric"
             }).format(now);
         }
 

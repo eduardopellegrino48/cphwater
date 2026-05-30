@@ -46,30 +46,23 @@
 
         #date-container {
             position: absolute;
-            top: 62px;
-            right: 70px;
+            top: 54px;
+            left: 60px;
+            right: 60px;
             color: var(--date-blue);
             display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            width: 360px;
+            justify-content: space-between;
+            align-items: flex-start;
+            z-index: 2;
+            pointer-events: none;
         }
 
-        #date-day {
-            font-size: 180px;
-            font-weight: 400;
-            letter-spacing: -6px;
-            line-height: 0.86;
-            display: inline-block;
-            width: max-content;
-        }
-
+        #date-day,
         #date-month {
             font-size: 180px;
             font-weight: 400;
             letter-spacing: -6px;
             line-height: 0.86;
-            margin-top: 10px;
             display: inline-block;
             width: max-content;
             text-transform: uppercase;
@@ -124,6 +117,7 @@
             flex-direction: column;
             gap: 8px;
             align-items: flex-start;
+            z-index: 3;
         }
 
         .spot-label {

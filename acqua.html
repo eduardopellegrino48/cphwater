@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1080, initial-scale=1.0">
     <title>Air Copenhagen - Water Report</title>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;800;900&display=swap');
 
@@ -159,7 +160,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2px;
+            margin-bottom: 3px;
             font-size: 12.5px;
         }
 
@@ -172,16 +173,25 @@
         .data-label {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
             font-weight: 500;
             line-height: 1;
         }
 
         .data-label svg {
-            width: 10.5px;
-            height: 10.5px;
             fill: currentColor;
             flex: 0 0 auto;
+            display: block;
+        }
+
+        .icon-temp {
+            width: 11px;
+            height: 11px;
+        }
+
+        .icon-wind {
+            width: 13px;
+            height: 13px;
         }
 
         .data-value {
@@ -227,6 +237,23 @@
 </head>
 
 <body>
+    <svg width="0" height="0" style="position:absolute; visibility:hidden;" aria-hidden="true">
+        <symbol id="icon-temperature" viewBox="0 0 32 32">
+            <path d="M11,30.079c0,0 -0.022,0 -0.03,0c-2.746,-0.016 -4.97,-2.25 -4.97,-5c-0,-1.629 0.78,-3.077 1.988,-3.99l-0,-16.07c-0,-1.66 1.347,-3.007 3.006,-3.007c1.659,0 3.006,1.347 3.006,3.007c-0,-0 -0,16.061 -0,16.061c1.214,0.912 2,2.365 2,3.999c0,2.717 -2.171,4.93 -4.871,4.999l-0.129,0.001m0,-2c1.656,0 3,-1.344 3,-3c0,-1.11 -0.604,-2.079 -1.501,-2.598c-0.309,-0.179 -0.499,-0.509 -0.499,-0.866l0,-16.596c0,-0.556 -0.451,-1.007 -1.006,-1.007c-0.556,0 -1.006,0.451 -1.006,1.007l-0,16.603c-0,0.356 -0.189,0.685 -0.496,0.864c-0.892,0.52 -1.492,1.487 -1.492,2.593c0,1.65 1.335,2.991 2.983,3c0.001,0 0.003,0 0.004,0"/>
+            <path d="M17.006,8l7.994,0.001c0.552,0 1,-0.448 1,-1c0,-0.552 -0.448,-1 -1,-1l-7.993,-0.001c-0.552,-0 -1,0.448 -1.001,1c0,0.552 0.448,1 1,1Z"/>
+            <path d="M17.006,11.987l6.217,0.001c0.552,-0 1.001,-0.448 1.001,-1c-0,-0.552 -0.448,-1 -1,-1l-6.217,-0.001c-0.552,-0 -1,0.448 -1.001,0.999c0,0.552 0.448,1.001 1,1.001Z"/>
+            <path d="M17.006,15.973l7.994,0.001c0.552,0 1,-0.448 1,-1c0,-0.552 -0.448,-1 -1,-1l-7.993,-0.001c-0.552,0 -1,0.448 -1.001,1c0,0.552 0.448,1 1,1Z"/>
+            <path d="M17.006,19.96l6.217,0.001c0.552,-0 1.001,-0.448 1.001,-1c-0,-0.552 -0.448,-1 -1,-1l-6.217,-0.001c-0.552,-0 -1,0.448 -1.001,1c0,0.552 0.448,1 1,1Z"/>
+            <circle cx="11.001" cy="25.008" r="1"/>
+        </symbol>
+
+        <symbol id="icon-wind" viewBox="0 -1 28 28">
+            <g transform="translate(-466.000000, -830.000000)">
+                <path d="M488,844 L467,844 C466.447,844 466,844.447 466,845 C466,845.553 466.447,846 467,846 L486.833,846 C489.687,846 492,847.791 492,850 C492,852.209 490.291,854 486,854 L486,856 L488,856 C491.313,856 494,853.313 494,850 C494,846.687 491.313,844 488,844 L488,844 Z M480.002,848 L480,848 L472,848 C471.447,848 471,848.448 471,849 C471,849.553 471.447,850 472,850 L480,850 C481.104,850 482,850.896 482,852 C482,853.104 481.104,854 480,854 L480,856 C482.209,856 484,854.209 484,852 C484,849.792 482.21,848.002 480.002,848 L480.002,848 Z M475,838 L487,838 C487.553,838 488,837.553 488,837 C488,836.448 487.553,836 487,836 L475,836 C474.447,836 474,836.448 474,837 C474,837.553 474.447,838 475,838 L475,838 Z M470,842 L488,842 C491.313,842 494,839.313 494,836 C494,832.687 491.313,830 488,830 L488,832 C490.822,832.531 492,833.791 492,836 C492,838.209 489.687,840 486.833,840 L470,840 C469.447,840 469,840.448 469,841 C469,841.553 469.447,842 470,842 L470,842 Z"/>
+            </g>
+        </symbol>
+    </svg>
+
     <div id="artboard">
 
         <div id="date-container">
@@ -241,9 +268,7 @@
 
                 <div class="card-data-row">
                     <span class="data-label">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M14 14.76V5a2 2 0 1 0-4 0v9.76a4 4 0 1 0 4 0ZM12 20a2 2 0 0 1-1-3.73V5a1 1 0 1 1 2 0v11.27A2 2 0 0 1 12 20Z"/>
-                        </svg>
+                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
                         Water
                     </span>
                     <span class="data-value" id="water-nordhavn">--°C</span>
@@ -251,9 +276,7 @@
 
                 <div class="card-data-row">
                     <span class="data-label">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M14 14.76V5a2 2 0 1 0-4 0v9.76a4 4 0 1 0 4 0ZM12 20a2 2 0 0 1-1-3.73V5a1 1 0 1 1 2 0v11.27A2 2 0 0 1 12 20Z"/>
-                        </svg>
+                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
                         Air
                     </span>
                     <span class="data-value" id="air-nordhavn">--°C</span>
@@ -261,9 +284,7 @@
 
                 <div class="card-data-row wind-row">
                     <span class="data-label">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M3 10h10a2.5 2.5 0 1 0-2.45-3H9.5a.75.75 0 0 1 0-1.5h1.05A4 4 0 1 1 14.5 10H3Zm0 4.75h14a1.75 1.75 0 1 0-1.7-2h-.8a.75.75 0 0 1 0-1.5h.8A3.25 3.25 0 1 1 17 14.75H3Zm0 4h9.5a1.5 1.5 0 1 0-1.46-1.2h-.79a.75.75 0 0 1 0-1.5h.79a3 3 0 1 1 1.46 5.7H3Z"/>
-                        </svg>
+                        <svg class="icon-wind"><use href="#icon-wind"></use></svg>
                         Wind
                     </span>
                     <span class="data-value" id="wind-nordhavn">-- m/s</span>
@@ -278,9 +299,7 @@
 
                 <div class="card-data-row">
                     <span class="data-label">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M14 14.76V5a2 2 0 1 0-4 0v9.76a4 4 0 1 0 4 0ZM12 20a2 2 0 0 1-1-3.73V5a1 1 0 1 1 2 0v11.27A2 2 0 0 1 12 20Z"/>
-                        </svg>
+                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
                         Water
                     </span>
                     <span class="data-value" id="water-refshaleoen">--°C</span>
@@ -288,9 +307,7 @@
 
                 <div class="card-data-row">
                     <span class="data-label">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M14 14.76V5a2 2 0 1 0-4 0v9.76a4 4 0 1 0 4 0ZM12 20a2 2 0 0 1-1-3.73V5a1 1 0 1 1 2 0v11.27A2 2 0 0 1 12 20Z"/>
-                        </svg>
+                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
                         Air
                     </span>
                     <span class="data-value" id="air-refshaleoen">--°C</span>
@@ -298,9 +315,7 @@
 
                 <div class="card-data-row wind-row">
                     <span class="data-label">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M3 10h10a2.5 2.5 0 1 0-2.45-3H9.5a.75.75 0 0 1 0-1.5h1.05A4 4 0 1 1 14.5 10H3Zm0 4.75h14a1.75 1.75 0 1 0-1.7-2h-.8a.75.75 0 0 1 0-1.5h.8A3.25 3.25 0 1 1 17 14.75H3Zm0 4h9.5a1.5 1.5 0 1 0-1.46-1.2h-.79a.75.75 0 0 1 0-1.5h.79a3 3 0 1 1 1.46 5.7H3Z"/>
-                        </svg>
+                        <svg class="icon-wind"><use href="#icon-wind"></use></svg>
                         Wind
                     </span>
                     <span class="data-value" id="wind-refshaleoen">-- m/s</span>
@@ -315,9 +330,7 @@
 
                 <div class="card-data-row">
                     <span class="data-label">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M14 14.76V5a2 2 0 1 0-4 0v9.76a4 4 0 1 0 4 0ZM12 20a2 2 0 0 1-1-3.73V5a1 1 0 1 1 2 0v11.27A2 2 0 0 1 12 20Z"/>
-                        </svg>
+                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
                         Water
                     </span>
                     <span class="data-value" id="water-indre-by">--°C</span>
@@ -325,9 +338,7 @@
 
                 <div class="card-data-row">
                     <span class="data-label">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M14 14.76V5a2 2 0 1 0-4 0v9.76a4 4 0 1 0 4 0ZM12 20a2 2 0 0 1-1-3.73V5a1 1 0 1 1 2 0v11.27A2 2 0 0 1 12 20Z"/>
-                        </svg>
+                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
                         Air
                     </span>
                     <span class="data-value" id="air-indre-by">--°C</span>
@@ -335,9 +346,7 @@
 
                 <div class="card-data-row wind-row">
                     <span class="data-label">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M3 10h10a2.5 2.5 0 1 0-2.45-3H9.5a.75.75 0 0 1 0-1.5h1.05A4 4 0 1 1 14.5 10H3Zm0 4.75h14a1.75 1.75 0 1 0-1.7-2h-.8a.75.75 0 0 1 0-1.5h.8A3.25 3.25 0 1 1 17 14.75H3Zm0 4h9.5a1.5 1.5 0 1 0-1.46-1.2h-.79a.75.75 0 0 1 0-1.5h.79a3 3 0 1 1 1.46 5.7H3Z"/>
-                        </svg>
+                        <svg class="icon-wind"><use href="#icon-wind"></use></svg>
                         Wind
                     </span>
                     <span class="data-value" id="wind-indre-by">-- m/s</span>
@@ -352,9 +361,7 @@
 
                 <div class="card-data-row">
                     <span class="data-label">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M14 14.76V5a2 2 0 1 0-4 0v9.76a4 4 0 1 0 4 0ZM12 20a2 2 0 0 1-1-3.73V5a1 1 0 1 1 2 0v11.27A2 2 0 0 1 12 20Z"/>
-                        </svg>
+                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
                         Water
                     </span>
                     <span class="data-value" id="water-islands-brygge">--°C</span>
@@ -362,9 +369,7 @@
 
                 <div class="card-data-row">
                     <span class="data-label">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M14 14.76V5a2 2 0 1 0-4 0v9.76a4 4 0 1 0 4 0ZM12 20a2 2 0 0 1-1-3.73V5a1 1 0 1 1 2 0v11.27A2 2 0 0 1 12 20Z"/>
-                        </svg>
+                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
                         Air
                     </span>
                     <span class="data-value" id="air-islands-brygge">--°C</span>
@@ -372,9 +377,7 @@
 
                 <div class="card-data-row wind-row">
                     <span class="data-label">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M3 10h10a2.5 2.5 0 1 0-2.45-3H9.5a.75.75 0 0 1 0-1.5h1.05A4 4 0 1 1 14.5 10H3Zm0 4.75h14a1.75 1.75 0 1 0-1.7-2h-.8a.75.75 0 0 1 0-1.5h.8A3.25 3.25 0 1 1 17 14.75H3Zm0 4h9.5a1.5 1.5 0 1 0-1.46-1.2h-.79a.75.75 0 0 1 0-1.5h.79a3 3 0 1 1 1.46 5.7H3Z"/>
-                        </svg>
+                        <svg class="icon-wind"><use href="#icon-wind"></use></svg>
                         Wind
                     </span>
                     <span class="data-value" id="wind-islands-brygge">-- m/s</span>
@@ -389,9 +392,7 @@
 
                 <div class="card-data-row">
                     <span class="data-label">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M14 14.76V5a2 2 0 1 0-4 0v9.76a4 4 0 1 0 4 0ZM12 20a2 2 0 0 1-1-3.73V5a1 1 0 1 1 2 0v11.27A2 2 0 0 1 12 20Z"/>
-                        </svg>
+                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
                         Water
                     </span>
                     <span class="data-value" id="water-amager">--°C</span>
@@ -399,9 +400,7 @@
 
                 <div class="card-data-row">
                     <span class="data-label">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M14 14.76V5a2 2 0 1 0-4 0v9.76a4 4 0 1 0 4 0ZM12 20a2 2 0 0 1-1-3.73V5a1 1 0 1 1 2 0v11.27A2 2 0 0 1 12 20Z"/>
-                        </svg>
+                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
                         Air
                     </span>
                     <span class="data-value" id="air-amager">--°C</span>
@@ -409,9 +408,7 @@
 
                 <div class="card-data-row wind-row">
                     <span class="data-label">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M3 10h10a2.5 2.5 0 1 0-2.45-3H9.5a.75.75 0 0 1 0-1.5h1.05A4 4 0 1 1 14.5 10H3Zm0 4.75h14a1.75 1.75 0 1 0-1.7-2h-.8a.75.75 0 0 1 0-1.5h.8A3.25 3.25 0 1 1 17 14.75H3Zm0 4h9.5a1.5 1.5 0 1 0-1.46-1.2h-.79a.75.75 0 0 1 0-1.5h.79a3 3 0 1 1 1.46 5.7H3Z"/>
-                        </svg>
+                        <svg class="icon-wind"><use href="#icon-wind"></use></svg>
                         Wind
                     </span>
                     <span class="data-value" id="wind-amager">-- m/s</span>
@@ -426,9 +423,7 @@
 
                 <div class="card-data-row">
                     <span class="data-label">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M14 14.76V5a2 2 0 1 0-4 0v9.76a4 4 0 1 0 4 0ZM12 20a2 2 0 0 1-1-3.73V5a1 1 0 1 1 2 0v11.27A2 2 0 0 1 12 20Z"/>
-                        </svg>
+                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
                         Water
                     </span>
                     <span class="data-value" id="water-kbh-sv">--°C</span>
@@ -436,9 +431,7 @@
 
                 <div class="card-data-row">
                     <span class="data-label">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M14 14.76V5a2 2 0 1 0-4 0v9.76a4 4 0 1 0 4 0ZM12 20a2 2 0 0 1-1-3.73V5a1 1 0 1 1 2 0v11.27A2 2 0 0 1 12 20Z"/>
-                        </svg>
+                        <svg class="icon-temp"><use href="#icon-temperature"></use></svg>
                         Air
                     </span>
                     <span class="data-value" id="air-kbh-sv">--°C</span>
@@ -446,9 +439,7 @@
 
                 <div class="card-data-row wind-row">
                     <span class="data-label">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M3 10h10a2.5 2.5 0 1 0-2.45-3H9.5a.75.75 0 0 1 0-1.5h1.05A4 4 0 1 1 14.5 10H3Zm0 4.75h14a1.75 1.75 0 1 0-1.7-2h-.8a.75.75 0 0 1 0-1.5h.8A3.25 3.25 0 1 1 17 14.75H3Zm0 4h9.5a1.5 1.5 0 1 0-1.46-1.2h-.79a.75.75 0 0 1 0-1.5h.79a3 3 0 1 1 1.46 5.7H3Z"/>
-                        </svg>
+                        <svg class="icon-wind"><use href="#icon-wind"></use></svg>
                         Wind
                     </span>
                     <span class="data-value" id="wind-kbh-sv">-- m/s</span>
@@ -489,6 +480,7 @@
 
             requestAnimationFrame(() => {
                 monthEl.style.transform = "scaleX(1)";
+
                 const dayWidth = dayEl.getBoundingClientRect().width;
                 const monthWidth = monthEl.getBoundingClientRect().width;
 

@@ -1,0 +1,55 @@
+{
+  "early": [
+    ["City is still asleep.", "The water is wide awake."],
+    ["First light at the harbor.", "Beat the city traffic."],
+    ["Morning routines just got better.", "Dive into the blue."],
+    ["Reset your system.", "Morning plunge recommended."],
+    ["Sunrise over the Baltic.", "The ultimate morning coffee."],
+    ["Start sharp.", "Cold water, clear focus."],
+    ["Zero emails, pure water.", "Prioritize your morning."]
+  ],
+  "evening": [
+    ["Screen time is over.", "Harbor time begins."],
+    ["Log off and dive in.", "The perfect post-work reset."],
+    ["Sunset incoming.", "Secure your spot on the docks."],
+    ["Wash off the workday.", "Nordhavn is waiting."],
+    ["Golden hour hits different.", "Enjoy the evening swim."],
+    ["Close the laptop.", "The water is calling your name."]
+  ],
+  "food": [
+    ["Swim hard, eat well.", "Time for some serious carbs."],
+    ["Earn your bakery run.", "Morning dip completed."],
+    ["Cold water, hot coffee.", "The Copenhagen survival kit."],
+    ["Salt on your skin.", "Ready for a fresh slice."],
+    ["The post-swim hunger is real.", "Go grab that pastry."],
+    ["Fuel up after the plunge.", "City treats await."]
+  ],
+  "data": [
+    ["System update:", "Conditions are loaded for today."],
+    ["Data confirmed.", "Harbor conditions are online."],
+    ["Vitals look good.", "Water temperature holding steady."],
+    ["Sensors synced.", "Copenhagen is ready."],
+    ["Sync with the Baltic.", "All signals point to the water."]
+  ],
+  "summer": [
+    ["Almost feels like the Mediterranean.", "Don't waste this day."],
+    ["Peak Nordic summer.", "The docks will be packed."],
+    ["Crystal clear and warming up.", "Summer is showing off."],
+    ["Towels on the concrete.", "The Copenhagen Riviera is open."],
+    ["No jacket required.", "Straight into the harbor."]
+  ],
+  "winter": [
+    ["Ice on the edges.", "Fire in the veins."],
+    ["System shock therapy.", "Enter the freezing water."],
+    ["Single digit temperatures.", "Maximum adrenaline output."],
+    ["Step out of the comfort zone.", "The ice water is waiting."],
+    ["Thermal shock incoming.", "Only the dedicated swim today."]
+  ],
+  "moody": [
+    ["Atmospheric conditions: moody.", "Swim anyway."],
+    ["Water falls from the sky and fills the sea.", "Embrace the grey."],
+    ["A little wind builds character.", "See you on the edge."],
+    ["Nordic weather at its finest.", "Don't let the drizzle stop you."],
+    ["Choppy surface, deep calm.", "Dive under the grey skies."]
+  ]
+}

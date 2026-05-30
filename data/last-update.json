@@ -1,6 +1,6 @@
 {
-  "status": "pending",
-  "updated_at_utc": null,
-  "records": 0,
-  "live_records": 0
+  "status": "success",
+  "updated_at_utc": "2026-05-30T14:55:10.354Z",
+  "records": 6,
+  "live_records": 6
 }

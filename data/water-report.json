@@ -1,7 +1,7 @@
 {
-  "status": "pending",
-  "updated_at_utc": null,
-  "updated_at_copenhagen": null,
+  "status": "success",
+  "updated_at_utc": "2026-05-30T14:55:10.354Z",
+  "updated_at_copenhagen": "2026-05-30 16:55:10",
   "note": "Weather and marine-condition data. This is not official bacteriological bathing-water quality.",
   "sources": [
     "https://api.open-meteo.com/v1/forecast",
@@ -13,60 +13,90 @@
       "name": "NORDHAVN",
       "latitude": 55.7082,
       "longitude": 12.5985,
-      "status": "unavailable",
-      "water_temperature": null,
-      "air_temperature": null,
-      "wind_speed": null
+      "status": "live",
+      "water_temperature": 16,
+      "air_temperature": 20,
+      "wind_speed": 6.5,
+      "source": {
+        "weather": "Open-Meteo Forecast API",
+        "marine": "Open-Meteo Marine API"
+      },
+      "errors": []
     },
     {
       "id": "refshaleoen",
       "name": "REFSHALEØEN",
       "latitude": 55.6936,
       "longitude": 12.6128,
-      "status": "unavailable",
-      "water_temperature": null,
-      "air_temperature": null,
-      "wind_speed": null
+      "status": "live",
+      "water_temperature": 16,
+      "air_temperature": 20,
+      "wind_speed": 7.1,
+      "source": {
+        "weather": "Open-Meteo Forecast API",
+        "marine": "Open-Meteo Marine API"
+      },
+      "errors": []
     },
     {
       "id": "indre-by",
       "name": "INDRE BY",
       "latitude": 55.6741,
       "longitude": 12.5789,
-      "status": "unavailable",
-      "water_temperature": null,
-      "air_temperature": null,
-      "wind_speed": null
+      "status": "live",
+      "water_temperature": 16,
+      "air_temperature": 20,
+      "wind_speed": 5.9,
+      "source": {
+        "weather": "Open-Meteo Forecast API",
+        "marine": "Open-Meteo Marine API"
+      },
+      "errors": []
     },
     {
       "id": "islands-brygge",
       "name": "ISLANDS BRYGGE",
       "latitude": 55.6635,
       "longitude": 12.5794,
-      "status": "unavailable",
-      "water_temperature": null,
-      "air_temperature": null,
-      "wind_speed": null
+      "status": "live",
+      "water_temperature": 16,
+      "air_temperature": 20,
+      "wind_speed": 6.2,
+      "source": {
+        "weather": "Open-Meteo Forecast API",
+        "marine": "Open-Meteo Marine API"
+      },
+      "errors": []
     },
     {
       "id": "amager-strandpark",
       "name": "AMAGER STRANDPARK",
       "latitude": 55.6565,
       "longitude": 12.6412,
-      "status": "unavailable",
-      "water_temperature": null,
-      "air_temperature": null,
-      "wind_speed": null
+      "status": "live",
+      "water_temperature": 16,
+      "air_temperature": 20,
+      "wind_speed": 6.9,
+      "source": {
+        "weather": "Open-Meteo Forecast API",
+        "marine": "Open-Meteo Marine API"
+      },
+      "errors": []
     },
     {
       "id": "kbh-sv",
       "name": "KØBENHAVN SV",
       "latitude": 55.6485,
       "longitude": 12.5485,
-      "status": "unavailable",
-      "water_temperature": null,
-      "air_temperature": null,
-      "wind_speed": null
+      "status": "live",
+      "water_temperature": 16,
+      "air_temperature": 20,
+      "wind_speed": 6.8,
+      "source": {
+        "weather": "Open-Meteo Forecast API",
+        "marine": "Open-Meteo Marine API"
+      },
+      "errors": []
     }
   ]
 }

@@ -227,7 +227,7 @@
 
         <div id="date-container">
             <div id="date-day">--</div>
-            <div id="date-month">---</div>
+            <div id="date-month">--</div>
         </div>
 
         <div class="spot-wrapper" id="node-nordhavn">
@@ -486,8 +486,8 @@
 
             monthEl.innerText = new Intl.DateTimeFormat("en-GB", {
                 timeZone: "Europe/Copenhagen",
-                month: "short"
-            }).format(now).toUpperCase();
+                month: "2-digit"
+            }).format(now);
         }
 
         function round1(value) {
@@ -556,7 +556,7 @@
                 waterTemp = i >= 0 ? marineData.hourly.sea_surface_temperature[i] : null;
             }
 
-            const result = {
+            return {
                 id: spot.id,
                 label: spot.label,
                 displayName: spot.displayName,
@@ -574,9 +574,6 @@
                 weather_ok: weather.status === "fulfilled",
                 marine_ok: marine.status === "fulfilled"
             };
-
-            console.log("SPOT DATA", result);
-            return result;
         }
 
         function updateCard(data) {

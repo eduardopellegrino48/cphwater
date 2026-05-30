@@ -1,6 +1,7 @@
 {
-  "status": "pending",
-  "updated_at_utc": null,
+  "status": "error",
+  "updated_at_utc": "2026-05-30T14:38:14.013Z",
   "source": "http://api.vandudsigten.dk/beaches",
-  "records": 0
+  "error": "fetch failed",
+  "previous_data_available": true
 }

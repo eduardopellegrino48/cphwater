@@ -96,12 +96,26 @@
             letter-spacing: -2px;
         }
 
-        #source-text {
-            margin-top: 14px;
+        #footer-meta {
+            margin-top: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+            width: 100%;
             font-size: 17px;
             font-weight: 400;
             color: rgba(255,255,255,0.82);
             letter-spacing: -0.02em;
+        }
+
+        #source-text,
+        #avg-water-text {
+            white-space: nowrap;
+        }
+
+        #avg-water-text {
+            text-align: right;
         }
 
         .spot-wrapper {
@@ -124,7 +138,7 @@
 
         .spot-card {
             background-color: var(--white);
-            width: 148px;
+            width: 158px;
             border-left: 8px solid var(--flag-grey);
             padding: 8px 12px;
             color: var(--brand-blue);
@@ -139,13 +153,14 @@
         }
 
         .card-title {
-            font-size: 17px;
+            font-size: 14.5px;
             font-weight: 900;
-            letter-spacing: -0.8px;
+            letter-spacing: -0.5px;
             margin-bottom: 7px;
-            line-height: 1;
+            line-height: 0.95;
             text-transform: uppercase;
-            white-space: nowrap;
+            white-space: normal;
+            max-width: 125px;
         }
 
         .card-data-row {
@@ -223,14 +238,17 @@
             <div class="spot-label">NORDHAVN</div>
             <div class="spot-card" id="card-nordhavn">
                 <div class="card-title" id="status-nordhavn">NORDHAVN</div>
+
                 <div class="card-data-row">
                     <span class="data-label">Water temp.</span>
                     <span class="data-value" id="water-nordhavn">--°C</span>
                 </div>
+
                 <div class="card-data-row">
                     <span class="data-label">Air temp.</span>
                     <span class="data-value" id="air-nordhavn">--°C</span>
                 </div>
+
                 <div class="card-data-row wind-row">
                     <span class="data-label">Wind</span>
                     <span class="data-value" id="wind-nordhavn">-- m/s</span>
@@ -242,14 +260,17 @@
             <div class="spot-label">REFSHALEØEN</div>
             <div class="spot-card" id="card-refshaleoen">
                 <div class="card-title" id="status-refshaleoen">REFSHALEØEN</div>
+
                 <div class="card-data-row">
                     <span class="data-label">Water temp.</span>
                     <span class="data-value" id="water-refshaleoen">--°C</span>
                 </div>
+
                 <div class="card-data-row">
                     <span class="data-label">Air temp.</span>
                     <span class="data-value" id="air-refshaleoen">--°C</span>
                 </div>
+
                 <div class="card-data-row wind-row">
                     <span class="data-label">Wind</span>
                     <span class="data-value" id="wind-refshaleoen">-- m/s</span>
@@ -261,14 +282,17 @@
             <div class="spot-label">INDRE BY</div>
             <div class="spot-card" id="card-indre-by">
                 <div class="card-title" id="status-indre-by">INDRE BY</div>
+
                 <div class="card-data-row">
                     <span class="data-label">Water temp.</span>
                     <span class="data-value" id="water-indre-by">--°C</span>
                 </div>
+
                 <div class="card-data-row">
                     <span class="data-label">Air temp.</span>
                     <span class="data-value" id="air-indre-by">--°C</span>
                 </div>
+
                 <div class="card-data-row wind-row">
                     <span class="data-label">Wind</span>
                     <span class="data-value" id="wind-indre-by">-- m/s</span>
@@ -279,15 +303,18 @@
         <div class="spot-wrapper" id="node-islands-brygge">
             <div class="spot-label">ISLANDS BRYGGE</div>
             <div class="spot-card" id="card-islands-brygge">
-                <div class="card-title" id="status-islands-brygge">ISLANDS BRYGGE</div>
+                <div class="card-title" id="status-islands-brygge">ISLANDS<br>BRYGGE</div>
+
                 <div class="card-data-row">
                     <span class="data-label">Water temp.</span>
                     <span class="data-value" id="water-islands-brygge">--°C</span>
                 </div>
+
                 <div class="card-data-row">
                     <span class="data-label">Air temp.</span>
                     <span class="data-value" id="air-islands-brygge">--°C</span>
                 </div>
+
                 <div class="card-data-row wind-row">
                     <span class="data-label">Wind</span>
                     <span class="data-value" id="wind-islands-brygge">-- m/s</span>
@@ -298,15 +325,18 @@
         <div class="spot-wrapper" id="node-amager">
             <div class="spot-label">AMAGER STRANDPARK</div>
             <div class="spot-card" id="card-amager">
-                <div class="card-title" id="status-amager">AMAGER</div>
+                <div class="card-title" id="status-amager">AMAGER<br>STRANDPARK</div>
+
                 <div class="card-data-row">
                     <span class="data-label">Water temp.</span>
                     <span class="data-value" id="water-amager">--°C</span>
                 </div>
+
                 <div class="card-data-row">
                     <span class="data-label">Air temp.</span>
                     <span class="data-value" id="air-amager">--°C</span>
                 </div>
+
                 <div class="card-data-row wind-row">
                     <span class="data-label">Wind</span>
                     <span class="data-value" id="wind-amager">-- m/s</span>
@@ -317,15 +347,18 @@
         <div class="spot-wrapper" id="node-kbh-sv">
             <div class="spot-label">KØBENHAVN SV</div>
             <div class="spot-card" id="card-kbh-sv">
-                <div class="card-title" id="status-kbh-sv">KØBENHAVN SV</div>
+                <div class="card-title" id="status-kbh-sv">KØBENHAVN<br>SV</div>
+
                 <div class="card-data-row">
                     <span class="data-label">Water temp.</span>
                     <span class="data-value" id="water-kbh-sv">--°C</span>
                 </div>
+
                 <div class="card-data-row">
                     <span class="data-label">Air temp.</span>
                     <span class="data-value" id="air-kbh-sv">--°C</span>
                 </div>
+
                 <div class="card-data-row wind-row">
                     <span class="data-label">Wind</span>
                     <span class="data-value" id="wind-kbh-sv">-- m/s</span>
@@ -335,26 +368,67 @@
 
         <div id="footer-banner">
             <p id="payoff-text">Loading live weather data...</p>
-            <p id="source-text">Source: Open-Meteo Forecast API + Marine API</p>
+
+            <div id="footer-meta">
+                <span id="source-text">Source: Open-Meteo Forecast API + Marine API</span>
+                <span id="avg-water-text">Average water temperature: --°C</span>
+            </div>
         </div>
     </div>
 
     <script>
         const SPOTS = [
-            { id: "nordhavn", label: "NORDHAVN", lat: 55.7069, lon: 12.5976 },
-            { id: "refshaleoen", label: "REFSHALEØEN", lat: 55.6939, lon: 12.6098 },
-            { id: "indre-by", label: "INDRE BY", lat: 55.6749, lon: 12.5794 },
-            { id: "islands-brygge", label: "ISLANDS BRYGGE", lat: 55.6648, lon: 12.5773 },
-            { id: "amager", label: "AMAGER STRANDPARK", lat: 55.6546, lon: 12.6480 },
-            { id: "kbh-sv", label: "KØBENHAVN SV", lat: 55.6471, lon: 12.5442 }
+            {
+                id: "nordhavn",
+                label: "NORDHAVN",
+                displayName: "NORDHAVN",
+                lat: 55.7069,
+                lon: 12.5976
+            },
+            {
+                id: "refshaleoen",
+                label: "REFSHALEØEN",
+                displayName: "REFSHALEØEN",
+                lat: 55.6939,
+                lon: 12.6098
+            },
+            {
+                id: "indre-by",
+                label: "INDRE BY",
+                displayName: "INDRE BY",
+                lat: 55.6749,
+                lon: 12.5794
+            },
+            {
+                id: "islands-brygge",
+                label: "ISLANDS BRYGGE",
+                displayName: "ISLANDS<br>BRYGGE",
+                lat: 55.6648,
+                lon: 12.5773
+            },
+            {
+                id: "amager",
+                label: "AMAGER STRANDPARK",
+                displayName: "AMAGER<br>STRANDPARK",
+                lat: 55.6546,
+                lon: 12.6480
+            },
+            {
+                id: "kbh-sv",
+                label: "KØBENHAVN SV",
+                displayName: "KØBENHAVN<br>SV",
+                lat: 55.6471,
+                lon: 12.5442
+            }
         ];
 
-        const FOOTER_LINES = {
+        const FALLBACK_FOOTER_LINES = {
             early: [
                 ["City is still asleep.", "The water is wide awake."],
                 ["First light at the harbor.", "Beat the city traffic."],
                 ["Morning routines just got better.", "Dive into the blue."],
                 ["Reset your system.", "Morning plunge recommended."],
+                ["Sunrise over the Baltic.", "The ultimate morning coffee."],
                 ["Start sharp.", "Cold water, clear focus."],
                 ["Zero emails, pure water.", "Prioritize your morning."]
             ],
@@ -421,6 +495,7 @@
 
             requestAnimationFrame(() => {
                 monthEl.style.transform = "scaleX(1)";
+
                 const dayWidth = dayEl.getBoundingClientRect().width;
                 const monthWidth = monthEl.getBoundingClientRect().width;
 
@@ -500,6 +575,7 @@
             const result = {
                 id: spot.id,
                 label: spot.label,
+                displayName: spot.displayName,
                 requested_latitude: spot.lat,
                 requested_longitude: spot.lon,
                 weather_grid_latitude: weatherData?.latitude ?? null,
@@ -531,30 +607,46 @@
             const hasAnyData = data.weather_ok || data.marine_ok;
 
             card.className = hasAnyData ? "spot-card status-good" : "spot-card status-closed";
-            status.innerText = data.label;
+            status.innerHTML = data.displayName || data.label || "";
             water.innerText = formatTemp(data.water_temperature);
             air.innerText = formatTemp(data.air_temperature);
             wind.innerText = formatWind(data.wind_speed);
         }
 
-        function dailyIndex(length) {
+        async function loadFooterMessages() {
+            try {
+                const response = await fetch("data/messages.json?v=" + Date.now(), {
+                    cache: "no-store"
+                });
+
+                if (!response.ok) {
+                    throw new Error("messages.json not found");
+                }
+
+                const data = await response.json();
+
+                if (!data || typeof data !== "object") {
+                    throw new Error("messages.json has invalid structure");
+                }
+
+                return data;
+
+            } catch (error) {
+                console.warn("Using fallback footer messages", error);
+                return FALLBACK_FOOTER_LINES;
+            }
+        }
+
+        function randomIndex(length) {
             if (!length) return 0;
 
-            const now = new Date();
-            const key = new Intl.DateTimeFormat("sv-SE", {
-                timeZone: "Europe/Copenhagen",
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit"
-            }).format(now);
-
-            let hash = 0;
-
-            for (let i = 0; i < key.length; i++) {
-                hash = (hash * 31 + key.charCodeAt(i)) >>> 0;
+            if (window.crypto && crypto.getRandomValues) {
+                const array = new Uint32Array(1);
+                crypto.getRandomValues(array);
+                return array[0] % length;
             }
 
-            return hash % length;
+            return Math.floor(Math.random() * length);
         }
 
         function pickFooterCategory(avgWater, avgAir, avgWind, avgPrecipitation) {
@@ -575,9 +667,10 @@
             return "data";
         }
 
-        function updateFooter(results) {
+        async function updateFooter(results) {
             const payoff = document.getElementById("payoff-text");
             const source = document.getElementById("source-text");
+            const avgWaterText = document.getElementById("avg-water-text");
 
             const validWater = results.map(r => round1(r.water_temperature)).filter(v => v !== null);
             const validAir = results.map(r => round1(r.air_temperature)).filter(v => v !== null);
@@ -588,7 +681,8 @@
 
             if (ok === 0) {
                 payoff.innerHTML = "Live data unavailable.<br>Please check the data source.";
-                source.innerText = "Source: Open-Meteo Forecast API + Marine API · Average water temperature: --°C";
+                source.innerText = "Source: Open-Meteo Forecast API + Marine API";
+                avgWaterText.innerText = "Average water temperature: --°C";
                 return;
             }
 
@@ -597,12 +691,15 @@
             const avgWind = validWind.length ? validWind.reduce((a, b) => a + b, 0) / validWind.length : null;
             const avgPrecipitation = validPrecipitation.length ? validPrecipitation.reduce((a, b) => a + b, 0) / validPrecipitation.length : null;
 
+            const messages = await loadFooterMessages();
             const category = pickFooterCategory(avgWater, avgAir, avgWind, avgPrecipitation);
-            const lines = FOOTER_LINES[category] || FOOTER_LINES.data;
-            const chosen = lines[dailyIndex(lines.length)];
+            const lines = messages[category] || messages.data || FALLBACK_FOOTER_LINES.data;
+            const chosen = lines[randomIndex(lines.length)];
 
             payoff.innerHTML = `${chosen[0]}<br>${chosen[1]}`;
-            source.innerText = `Source: Open-Meteo Forecast API + Marine API · Average water temperature: ${formatTemp(avgWater)}`;
+
+            source.innerText = "Source: Open-Meteo Forecast API + Marine API";
+            avgWaterText.innerText = `Average water temperature: ${formatTemp(avgWater)}`;
         }
 
         async function load() {
@@ -612,7 +709,7 @@
                 const results = await Promise.all(SPOTS.map(fetchSpot));
 
                 results.forEach(updateCard);
-                updateFooter(results);
+                await updateFooter(results);
 
             } catch (error) {
                 console.error("General loading error", error);
@@ -621,13 +718,15 @@
                     updateCard({
                         id: spot.id,
                         label: spot.label,
+                        displayName: spot.displayName,
                         weather_ok: false,
                         marine_ok: false
                     });
                 });
 
                 document.getElementById("payoff-text").innerHTML = "Live data unavailable.<br>Please check the data source.";
-                document.getElementById("source-text").innerText = "Source: Open-Meteo Forecast API + Marine API · Average water temperature: --°C";
+                document.getElementById("source-text").innerText = "Source: Open-Meteo Forecast API + Marine API";
+                document.getElementById("avg-water-text").innerText = "Average water temperature: --°C";
             }
         }
 

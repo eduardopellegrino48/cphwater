@@ -332,29 +332,29 @@
     </div>
 
     <script>
-        const API_URL = "http://api.vandudsigten.dk/beaches";
-
-        const PROXY_URLS = [
-            "https://corsproxy.io/?" + encodeURIComponent(API_URL),
-            "https://api.allorigins.win/raw?url=" + encodeURIComponent(API_URL),
-            "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(API_URL)
-        ];
+        /*
+          IMPORTANTE:
+          Sostituisci questo URL con il tuo Cloudflare Worker.
+          Esempio:
+          const DATA_URL = "https://cph-water-tuonome.workers.dev";
+        */
+        const DATA_URL = "https://INSERISCI-QUI-IL-TUO-WORKER.workers.dev";
 
         const nodes = [
             {
                 domId: "1116",
                 label: "NORDHAVN",
-                match: ["nordhavn", "nordhavnen"]
+                match: ["nordhavn", "nordhavnen", "sandkaj", "orientkaj"]
             },
             {
                 domId: "1115",
                 label: "REFSHALEØEN",
-                match: ["refshaleøen", "refshaleoen", "refshale"]
+                match: ["refshaleøen", "refshaleoen", "refshale", "halvandet"]
             },
             {
                 domId: "1111",
                 label: "INDRE BY",
-                match: ["indre by", "havnebadet fisketorvet", "fisketorvet"]
+                match: ["indre by", "fisketorvet", "havnebadet fisketorvet", "kalvebod"]
             },
             {
                 domId: "islands",
@@ -369,34 +369,25 @@
             {
                 domId: "1112",
                 label: "KØBENHAVN SV",
-                match: ["københavn sv", "kobenhavn sv", "sluseholmen", "sydhavnen"]
+                match: ["københavn sv", "kobenhavn sv", "sluseholmen", "sydhavnen", "valbyparken"]
             }
         ];
 
         function setDate() {
-            const today = new Date();
+            const now = new Date();
 
             const day = new Intl.DateTimeFormat("en-GB", {
                 timeZone: "Europe/Copenhagen",
                 day: "2-digit"
-            }).format(today);
+            }).format(now);
 
             const month = new Intl.DateTimeFormat("en-GB", {
                 timeZone: "Europe/Copenhagen",
                 month: "short"
-            }).format(today).toUpperCase();
+            }).format(now).toUpperCase();
 
             document.getElementById("date-day").innerText = day;
             document.getElementById("date-month").innerText = month;
-        }
-
-        function getCopenhagenDateKey() {
-            return new Intl.DateTimeFormat("sv-SE", {
-                timeZone: "Europe/Copenhagen",
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit"
-            }).format(new Date());
         }
 
         function normalizeText(value) {
@@ -412,7 +403,9 @@
 
         function toNumber(value) {
             if (value === null || value === undefined || value === "") return null;
+
             const parsed = Number(String(value).replace(",", "."));
+
             return Number.isFinite(parsed) ? parsed : null;
         }
 
@@ -443,44 +436,61 @@
             }
         }
 
-        async function fetchWithFallback() {
-            let lastError = null;
+        function getDateKey(value) {
+            if (!value) return "";
 
-            for (const url of PROXY_URLS) {
-                try {
-                    console.log("Trying proxy:", url);
+            const raw = String(value);
 
-                    const response = await fetch(url, {
-                        method: "GET",
-                        cache: "no-store"
-                    });
-
-                    if (!response.ok) {
-                        throw new Error("HTTP error " + response.status);
-                    }
-
-                    const text = await response.text();
-
-                    if (!text || text.trim().startsWith("<")) {
-                        throw new Error("Proxy returned non-JSON response");
-                    }
-
-                    const data = JSON.parse(text);
-
-                    if (!Array.isArray(data)) {
-                        throw new Error("Unexpected API structure");
-                    }
-
-                    console.log("Proxy working:", url);
-                    return data;
-
-                } catch (error) {
-                    console.warn("Proxy failed:", url, error);
-                    lastError = error;
-                }
+            if (/^\d{4}-\d{2}-\d{2}/.test(raw)) {
+                return raw.slice(0, 10);
             }
 
-            throw lastError || new Error("All proxies failed");
+            const parsed = new Date(raw);
+
+            if (Number.isNaN(parsed.getTime())) {
+                return "";
+            }
+
+            return new Intl.DateTimeFormat("sv-SE", {
+                timeZone: "Europe/Copenhagen",
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit"
+            }).format(parsed);
+        }
+
+        function getTodayKey() {
+            return new Intl.DateTimeFormat("sv-SE", {
+                timeZone: "Europe/Copenhagen",
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit"
+            }).format(new Date());
+        }
+
+        async function fetchWaterData() {
+            const response = await fetch(DATA_URL, {
+                method: "GET",
+                cache: "no-store"
+            });
+
+            if (!response.ok) {
+                throw new Error("HTTP error " + response.status);
+            }
+
+            const text = await response.text();
+
+            if (!text || text.trim().startsWith("<")) {
+                throw new Error("La risposta non è JSON. Controlla il Worker.");
+            }
+
+            const data = JSON.parse(text);
+
+            if (!Array.isArray(data)) {
+                throw new Error("Struttura API inattesa: il risultato non è un array.");
+            }
+
+            return data;
         }
 
         function findBeach(beaches, matchTerms) {
@@ -500,29 +510,36 @@
             });
         }
 
-        function getTodayMeasurement(beach) {
+        function getMeasurement(beach) {
             if (!beach || !Array.isArray(beach.data) || beach.data.length === 0) {
                 return null;
             }
 
-            const todayKey = getCopenhagenDateKey();
+            const todayKey = getTodayKey();
 
-            const normalizedData = beach.data
-                .filter(item => item && item.date)
-                .map(item => ({
-                    ...item,
-                    dateKey: String(item.date).slice(0, 10)
-                }));
+            const rows = beach.data
+                .filter(row => row)
+                .map(row => ({
+                    ...row,
+                    _dateKey: getDateKey(row.date)
+                }))
+                .filter(row => row._dateKey);
 
-            const todayData = normalizedData.find(item => item.dateKey === todayKey);
-
-            if (todayData) {
-                return todayData;
+            if (rows.length === 0) {
+                return null;
             }
 
-            return normalizedData.sort((a, b) => {
-                return new Date(b.dateKey).getTime() - new Date(a.dateKey).getTime();
-            })[0] || null;
+            const todayRows = rows.filter(row => row._dateKey === todayKey);
+
+            if (todayRows.length > 0) {
+                return todayRows[0];
+            }
+
+            rows.sort((a, b) => {
+                return new Date(b._dateKey).getTime() - new Date(a._dateKey).getTime();
+            });
+
+            return rows[0];
         }
 
         function updateCard(domId, measurement) {
@@ -532,7 +549,9 @@
             const airEl = document.getElementById(`air-${domId}`);
             const windEl = document.getElementById(`wind-${domId}`);
 
-            if (!card || !statusEl || !waterEl || !airEl || !windEl) return;
+            if (!card || !statusEl || !waterEl || !airEl || !windEl) {
+                return;
+            }
 
             if (!measurement) {
                 card.className = "spot-card status-closed";
@@ -552,62 +571,88 @@
             windEl.innerText = formatWind(measurement.wind_speed);
         }
 
-        function updateFooter(amagerMeasurement) {
+        function updateFooter(measurements) {
             const payoffEl = document.getElementById("payoff-text");
+
             if (!payoffEl) return;
 
-            const quality = Number(amagerMeasurement?.water_quality);
+            const validMeasurements = measurements.filter(item => item && item.measurement);
+            const qualities = validMeasurements.map(item => Number(item.measurement.water_quality));
 
-            if (quality === 2) {
-                payoffEl.innerHTML = "Amager Strand is calling.<br>The water looks good.";
-            } else if (quality === 1) {
-                payoffEl.innerHTML = "Skip the swim today.<br>Water quality is restricted.";
-            } else if (quality === 3) {
-                payoffEl.innerHTML = "Check local flags.<br>Conditions require attention.";
+            if (validMeasurements.length === 0) {
+                payoffEl.innerHTML = "Water data loaded.<br>No matching Copenhagen spots.";
+                return;
+            }
+
+            const hasBad = qualities.includes(1);
+            const hasWarn = qualities.includes(3);
+            const allGood = qualities.length > 0 && qualities.every(q => q === 2);
+
+            if (hasBad) {
+                payoffEl.innerHTML = "Skip selected spots today.<br>Some water quality alerts are active.";
+            } else if (hasWarn) {
+                payoffEl.innerHTML = "Check local flags.<br>Some spots require attention.";
+            } else if (allGood) {
+                payoffEl.innerHTML = "Copenhagen is calling.<br>The water looks good.";
             } else {
                 payoffEl.innerHTML = "Water data updated.<br>Check before swimming.";
             }
         }
 
-        function logAvailableCopenhagenBeaches(beaches) {
-            const copenhagenBeaches = beaches
-                .filter(beach => normalizeText(beach.municipality).includes("kobenhavn"))
+        function logDebugTable(beaches) {
+            const copenhagen = beaches
+                .filter(beach => {
+                    const txt = normalizeText([
+                        beach.municipality,
+                        beach.name,
+                        beach.description
+                    ].join(" "));
+
+                    return txt.includes("kobenhavn") ||
+                        txt.includes("amager") ||
+                        txt.includes("islands") ||
+                        txt.includes("sydhavn") ||
+                        txt.includes("nordhavn") ||
+                        txt.includes("refshale");
+                })
                 .map(beach => ({
                     id: beach.id,
                     name: beach.name,
-                    municipality: beach.municipality
+                    municipality: beach.municipality,
+                    dataRows: Array.isArray(beach.data) ? beach.data.length : 0
                 }));
 
-            console.table(copenhagenBeaches);
+            console.table(copenhagen);
         }
 
         async function loadWaterData() {
             try {
-                const beaches = await fetchWithFallback();
+                const beaches = await fetchWaterData();
 
-                logAvailableCopenhagenBeaches(beaches);
+                console.log("Raw beaches loaded:", beaches.length);
+                logDebugTable(beaches);
 
-                let amagerMeasurement = null;
-
-                nodes.forEach(node => {
+                const results = nodes.map(node => {
                     const beach = findBeach(beaches, node.match);
-                    const measurement = getTodayMeasurement(beach);
+                    const measurement = getMeasurement(beach);
 
                     console.log({
                         node: node.label,
-                        matchedBeachId: beach?.id,
-                        matchedBeachName: beach?.name,
+                        matchedBeachId: beach ? beach.id : null,
+                        matchedBeachName: beach ? beach.name : null,
                         measurement: measurement
                     });
 
                     updateCard(node.domId, measurement);
 
-                    if (node.domId === "630") {
-                        amagerMeasurement = measurement;
-                    }
+                    return {
+                        node,
+                        beach,
+                        measurement
+                    };
                 });
 
-                updateFooter(amagerMeasurement);
+                updateFooter(results);
 
             } catch (error) {
                 console.error("Water data loading error:", error);
@@ -615,6 +660,7 @@
                 nodes.forEach(node => updateCard(node.domId, null));
 
                 const payoffEl = document.getElementById("payoff-text");
+
                 if (payoffEl) {
                     payoffEl.innerHTML = "Water data unavailable.<br>Please check the data source.";
                 }

@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1080, initial-scale=1.0">
+    <title>Air Copenhagen - Water Report</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;800;900&display=swap');
+
+        :root {
+            --brand-blue: #002db3;
+            --footer-blue: #7aa2ec;
+            --date-blue: #7aa2ec;
+
+            --flag-green: #2ea640;
+            --flag-yellow: #f2c94c;
+            --flag-red: #d93025;
+            --flag-grey: #a0a0a0;
+
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Schibsted Grotesk', Arial, sans-serif;
+            letter-spacing: -0.04em;
+        }
+
+        body {
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #artboard {
+            position: relative;
+            width: 1080px;
+            height: 1350px;
+            background-color: var(--brand-blue);
+            background-image: url('mappa-base.svg');
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+        }
+
+        #top-header {
+            position: absolute;
+            top: 60px;
+            left: 60px;
+            right: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            color: var(--date-blue);
+            font-size: 32px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        #date-container {
+            position: absolute;
+            top: 130px;
+            left: 60px;
+            right: 60px;
+            color: var(--date-blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        #date-day,
+        #date-month {
+            font-size: 260px;
+            font-weight: 400;
+            line-height: 0.8;
+            letter-spacing: -8px;
+            text-transform: uppercase;
+        }
+
+        #date-day {
+            text-align: left;
+        }
+
+        #date-month {
+            text-align: right;
+        }
+
+        #footer-banner {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 255px;
+            background-color: var(--footer-blue);
+            color: var(--white);
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        #payoff-text {
+            font-size: 65px;
+            font-weight: 400;
+            line-height: 1.05;
+            letter-spacing: -3px;
+            color: var(--white);
+        }
+
+        #footer-meta {
+            margin-top: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+            width: 100%;
+            font-size: 17px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.82);
+            letter-spacing: -0.02em;
+        }
+
+        #source-text,
+        #avg-water-text {
+            white-space: nowrap;
+        }
+
+        #avg-water-text {
+            text-align: right;
+        }
+
+        .spot-wrapper {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-start;
+            z-index: 3;
+        }
+
+        .spot-label {
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .spot-card {
+            background-color: var(--white);
+            width: 158px;
+            border-left: 8px solid var(--flag-grey);
+            padding: 8px 12px;
+            color: var(--brand-blue);
+        }
+
+        .status-good {
+            border-left-color: var(--flag-green) !important;
+        }
+
+        .status-warning {
+            border-left-color: var(--flag-yellow) !important;
+        }
+
+        .status-bad {
+            border-left-color: var(--flag-red) !important;
+        }
+
+        .status-unknown,
+        .status-closed {
+            border-left-color: var(--flag-grey) !important;
+        }
+
+        .card-title {
+            font-size: 14.5px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            margin-bottom: 7px;
+            line-height: 0.95;
+            text-transform: uppercase;
+            white-space: normal;
+            max-width: 125px;
+        }
+
+        .card-data-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3px;
+            font-size: 12.5px;
+        }
+
+        .quality-row {
+            margin-bottom: 7px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(0, 45, 179, 0.15);
+        }
+
+        .wind-row {
+            margin-top: 8px;
+            padding-top: 6px;
+            border-top: 1px solid rgba(0, 45, 179, 0.15);
+        }
+
+        .data-label {
+            font-weight: 500;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .data-value {
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        #node-nordhavn {
+            top: 12%;
+            left: 36%;
+            align-items: flex-end;
+        }
+
+        #node-refshaleoen {
+            top: 27%;
+            left: 51%;
+        }
+
+        #node-indre-by {
+            top: 36%;
+            left: 20%;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        #node-islands-brygge {
+            top: 53%;
+            left: 30%;
+        }
+
+        #node-amager {
+            top: 58.5%;
+            left: 78%;
+            align-items: flex-start;
+        }
+
+        #node-kbh-sv {
+            top: 71%;
+            left: 60px;
+            flex-direction: column-reverse;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="artboard">
+
+        <div id="top-header">
+            <span>Copenhagen Water Index</span>
+            <span id="year">2026</span>
+        </div>
+
+        <div id="date-container">
+            <div id="date-day">--</div>
+            <div id="date-month">--</div>
+        </div>
+
+        <div class="spot-wrapper" id="node-nordhavn">
+            <div class="spot-label">NORDHAVN</div>
+            <div class="spot-card" id="card-nordhavn">
+                <div class="card-title" id="status-nordhavn">NORDHAVN</div>
+
+                <div class="card-data-row quality-row">
+                    <span class="data-label">Quality</span>
+                    <span class="data-value" id="quality-nordhavn">--</span>
+                </div>
+
+                <div class="card-data-row">
+                    <span class="data-label">Water temp.</span>
+                    <span class="data-value" id="water-nordhavn">--°C</span>
+                </div>
+
+                <div class="card-data-row">
+                    <span class="data-label">Air temp.</span>
+                    <span class="data-value" id="air-nordhavn">--°C</span>
+                </div>
+
+                <div class="card-data-row wind-row">
+                    <span class="data-label">Wind</span>
+                    <span class="data-value" id="wind-nordhavn">-- m/s</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="spot-wrapper" id="node-refshaleoen">
+            <div class="spot-label">REFSHALEØEN</div>
+            <div class="spot-card" id="card-refshaleoen">
+                <div class="card-title" id="status-refshaleoen">REFSHALEØEN</div>
+
+                <div class="card-data-row quality-row">
+                    <span class="data-label">Quality</span>
+                    <span class="data-value" id="quality-refshaleoen">--</span>
+                </div>
+
+                <div class="card-data-row">
+                    <span class="data-label">Water temp.</span>
+                    <span class="data-value" id="water-refshaleoen">--°C</span>
+                </div>
+
+                <div class="card-data-row">
+                    <span class="data-label">Air temp.</span>
+                    <span class="data-value" id="air-refshaleoen">--°C</span>
+                </div>
+
+                <div class="card-data-row wind-row">
+                    <span class="data-label">Wind</span>
+                    <span class="data-value" id="wind-refshaleoen">-- m/s</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="spot-wrapper" id="node-indre-by">
+            <div class="spot-label">INDRE BY</div>
+            <div class="spot-card" id="card-indre-by">
+                <div class="card-title" id="status-indre-by">INDRE BY</div>
+
+                <div class="card-data-row quality-row">
+                    <span class="data-label">Quality</span>
+                    <span class="data-value" id="quality-indre-by">--</span>
+                </div>
+
+                <div class="card-data-row">
+                    <span class="data-label">Water temp.</span>
+                    <span class="data-value" id="water-indre-by">--°C</span>
+                </div>
+
+                <div class="card-data-row">
+                    <span class="data-label">Air temp.</span>
+                    <span class="data-value" id="air-indre-by">--°C</span>
+                </div>
+
+                <div class="card-data-row wind-row">
+                    <span class="data-label">Wind</span>
+                    <span class="data-value" id="wind-indre-by">-- m/s</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="spot-wrapper" id="node-islands-brygge">
+            <div class="spot-label">ISLANDS BRYGGE</div>
+            <div class="spot-card" id="card-islands-brygge">
+                <div class="card-title" id="status-islands-brygge">ISLANDS<br>BRYGGE</div>
+
+                <div class="card-data-row quality-row">
+                    <span class="data-label">Quality</span>
+                    <span class="data-value" id="quality-islands-brygge">--</span>
+                </div>
+
+                <div class="card-data-row">
+                    <span class="data-label">Water temp.</span>
+                    <span class="data-value" id="water-islands-brygge">--°C</span>
+                </div>
+
+                <div class="card-data-row">
+                    <span class="data-label">Air temp.</span>
+                    <span class="data-value" id="air-islands-brygge">--°C</span>
+                </div>
+
+                <div class="card-data-row wind-row">
+                    <span class="data-label">Wind</span>
+                    <span class="data-value" id="wind-islands-brygge">-- m/s</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="spot-wrapper" id="node-amager">
+            <div class="spot-label">AMAGER STRANDPARK</div>
+            <div class="spot-card" id="card-amager">
+                <div class="card-title" id="status-amager">AMAGER<br>STRANDPARK</div>
+
+                <div class="card-data-row quality-row">
+                    <span class="data-label">Quality</span>
+                    <span class="data-value" id="quality-amager">--</span>
+                </div>
+
+                <div class="card-data-row">
+                    <span class="data-label">Water temp.</span>
+                    <span class="data-value" id="water-amager">--°C</span>
+                </div>
+
+                <div class="card-data-row">
+                    <span class="data-label">Air temp.</span>
+                    <span class="data-value" id="air-amager">--°C</span>
+                </div>
+
+                <div class="card-data-row wind-row">
+                    <span class="data-label">Wind</span>
+                    <span class="data-value" id="wind-amager">-- m/s</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="spot-wrapper" id="node-kbh-sv">
+            <div class="spot-label">KØBENHAVN SV</div>
+            <div class="spot-card" id="card-kbh-sv">
+                <div class="card-title" id="status-kbh-sv">KØBENHAVN SV</div>
+
+                <div class="card-data-row quality-row">
+                    <span class="data-label">Quality</span>
+                    <span class="data-value" id="quality-kbh-sv">--</span>
+                </div>
+
+                <div class="card-data-row">
+                    <span class="data-label">Water temp.</span>
+                    <span class="data-value" id="water-kbh-sv">--°C</span>
+                </div>
+
+                <div class="card-data-row">
+                    <span class="data-label">Air temp.</span>
+                    <span class="data-value" id="air-kbh-sv">--°C</span>
+                </div>
+
+                <div class="card-data-row wind-row">
+                    <span class="data-label">Wind</span>
+                    <span class="data-value" id="wind-kbh-sv">-- m/s</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer-banner">
+            <p id="payoff-text">Loading live weather data...</p>
+
+            <div id="footer-meta">
+                <span id="source-text">Source: Open-Meteo + Vandudsigten</span>
+                <span id="avg-water-text">Average water temperature: --°C</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SPOTS = [
+            {
+                id: "nordhavn",
+                label: "NORDHAVN",
+                displayName: "NORDHAVN",
+                lat: 55.7069,
+                lon: 12.5976
+            },
+            {
+                id: "refshaleoen",
+                label: "REFSHALEØEN",
+                displayName: "REFSHALEØEN",
+                lat: 55.6939,
+                lon: 12.6098
+            },
+            {
+                id: "indre-by",
+                label: "INDRE BY",
+                displayName: "INDRE BY",
+                lat: 55.6749,
+                lon: 12.5794
+            },
+            {
+                id: "islands-brygge",
+                label: "ISLANDS BRYGGE",
+                displayName: "ISLANDS<br>BRYGGE",
+                lat: 55.6648,
+                lon: 12.5773
+            },
+            {
+                id: "amager",
+                label: "AMAGER STRANDPARK",
+                displayName: "AMAGER<br>STRANDPARK",
+                lat: 55.6546,
+                lon: 12.6480
+            },
+            {
+                id: "kbh-sv",
+                label: "KØBENHAVN SV",
+                displayName: "KØBENHAVN SV",
+                lat: 55.6471,
+                lon: 12.5442
+            }
+        ];
+
+        const VANDUDSIGTEN_ENDPOINT = "http://api.vandudsigten.dk/doc/beaches";
+
+        const FALLBACK_FOOTER_LINES = {
+            early: [
+                ["City is still asleep.", "The water is wide awake."],
+                ["First light at the harbor.", "Beat the city traffic."],
+                ["Morning routines just got better.", "Dive into the blue."],
+                ["Reset your system.", "Morning plunge recommended."],
+                ["Sunrise over the Baltic.", "The ultimate morning coffee."],
+                ["Start sharp.", "Cold water, clear focus."],
+                ["Zero emails, pure water.", "Prioritize your morning."]
+            ],
+            evening: [
+                ["Screen time is over.", "Harbor time begins."],
+                ["Log off and dive in.", "The perfect post-work reset."],
+                ["Sunset incoming.", "Secure your spot on the docks."],
+                ["Wash off the workday.", "Nordhavn is waiting."],
+                ["Golden hour hits different.", "Enjoy the evening swim."],
+                ["Close the laptop.", "The water is calling your name."]
+            ],
+            food: [
+                ["Swim hard, eat well.", "Time for some serious carbs."],
+                ["Earn your bakery run.", "Morning dip completed."],
+                ["Cold water, hot coffee.", "The Copenhagen survival kit."],
+                ["Salt on your skin.", "Ready for a fresh slice."],
+                ["The post-swim hunger is real.", "Go grab that pastry."],
+                ["Fuel up after the plunge.", "City treats await."]
+            ],
+            data: [
+                ["System update:", "Conditions are loaded for today."],
+                ["Data confirmed.", "Harbor conditions are online."],
+                ["Vitals look good.", "Water temperature holding steady."],
+                ["Sensors synced.", "Copenhagen is ready."],
+                ["Sync with the Baltic.", "All signals point to the water."]
+            ],
+            summer: [
+                ["Almost feels like the Mediterranean.", "Don't waste this day."],
+                ["Peak Nordic summer.", "The docks will be packed."],
+                ["Crystal clear and warming up.", "Summer is showing off."],
+                ["Towels on the concrete.", "The Copenhagen Riviera is open."],
+                ["No jacket required.", "Straight into the harbor."]
+            ],
+            winter: [
+                ["Ice on the edges.", "Fire in the veins."],
+                ["System shock therapy.", "Enter the freezing water."],
+                ["Single digit temperatures.", "Maximum adrenaline output."],
+                ["Step out of the comfort zone.", "The ice water is waiting."],
+                ["Thermal shock incoming.", "Only the dedicated swim today."]
+            ],
+            moody: [
+                ["Atmospheric conditions: moody.", "Swim anyway."],
+                ["Water falls from the sky and fills the sea.", "Embrace the grey."],
+                ["A little wind builds character.", "See you on the edge."],
+                ["Nordic weather at its finest.", "Don't let the drizzle stop you."],
+                ["Choppy surface, deep calm.", "Dive under the grey skies."]
+            ]
+        };
+
+        function setDate() {
+            const now = new Date();
+
+            document.getElementById("date-day").innerText = new Intl.DateTimeFormat("en-GB", {
+                timeZone: "Europe/Copenhagen",
+                day: "2-digit"
+            }).format(now);
+
+            document.getElementById("date-month").innerText = new Intl.DateTimeFormat("en-GB", {
+                timeZone: "Europe/Copenhagen",
+                month: "2-digit"
+            }).format(now);
+
+            document.getElementById("year").innerText = new Intl.DateTimeFormat("en-GB", {
+                timeZone: "Europe/Copenhagen",
+                year: "numeric"
+            }).format(now);
+        }
+
+        function round1(value) {
+            const n = Number(value);
+            return Number.isFinite(n) ? Math.round(n * 10) / 10 : null;
+        }
+
+        function formatTemp(value) {
+            const n = round1(value);
+            return n === null ? "--°C" : n.toFixed(1).replace(".0", "") + "°C";
+        }
+
+        function formatWind(value) {
+            const n = round1(value);
+            return n === null ? "-- m/s" : n.toFixed(1).replace(".0", "") + " m/s";
+        }
+
+        function nearestIndex(times) {
+            if (!Array.isArray(times) || times.length === 0) return -1;
+
+            const now = Date.now();
+            let best = 0;
+            let bestDiff = Infinity;
+
+            times.forEach((t, index) => {
+                const ts = new Date(t).getTime();
+                const diff = Math.abs(ts - now);
+
+                if (diff < bestDiff) {
+                    bestDiff = diff;
+                    best = index;
+                }
+            });
+
+            return best;
+        }
+
+        async function fetchJson(url) {
+            const response = await fetch(url, { cache: "no-store" });
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status} ${url}`);
+            }
+
+            return response.json();
+        }
+
+        async function fetchJsonWithFallback(url) {
+            const urls = [
+                url,
+                url.replace("http://", "https://"),
+                "https://api.allorigins.win/raw?url=" + encodeURIComponent(url)
+            ];
+
+            let lastError = null;
+
+            for (const candidateUrl of urls) {
+                try {
+                    return await fetchJson(candidateUrl);
+                } catch (error) {
+                    lastError = error;
+                    console.warn("Fetch failed:", candidateUrl, error);
+                }
+            }
+
+            throw lastError || new Error("All fetch attempts failed");
+        }
+
+        function normalizeWaterQuality(value) {
+            const q = Number(value);
+
+            if (!Number.isFinite(q)) {
+                return {
+                    className: "status-unknown",
+                    label: "Unknown"
+                };
+            }
+
+            if (q === 1) {
+                return {
+                    className: "status-bad",
+                    label: "Bad"
+                };
+            }
+
+            if (q === 2) {
+                return {
+                    className: "status-good",
+                    label: "Good"
+                };
+            }
+
+            if (q === 3) {
+                return {
+                    className: "status-warning",
+                    label: "Warning"
+                };
+            }
+
+            if (q === 4) {
+                return {
+                    className: "status-unknown",
+                    label: "No data"
+                };
+            }
+
+            return {
+                className: "status-unknown",
+                label: "Unknown"
+            };
+        }
+
+        function toRad(value) {
+            return value * Math.PI / 180;
+        }
+
+        function distanceKm(lat1, lon1, lat2, lon2) {
+            const R = 6371;
+            const dLat = toRad(lat2 - lat1);
+            const dLon = toRad(lon2 - lon1);
+
+            const a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        }
+
+        function parseDateSafe(value) {
+            const d = new Date(value);
+            return Number.isNaN(d.getTime()) ? null : d;
+        }
+
+        function latestMeasurementForBeach(measurements, beachId) {
+            const rows = measurements
+                .filter(row => Number(row.id) === Number(beachId))
+                .filter(row => row.water_quality !== undefined && row.water_quality !== null);
+
+            if (!rows.length) return null;
+
+            rows.sort((a, b) => {
+                const da = parseDateSafe(a.date)?.getTime() ?? 0;
+                const db = parseDateSafe(b.date)?.getTime() ?? 0;
+                return db - da;
+            });
+
+            return rows[0];
+        }
+
+        function findNearestBeach(spot, overview) {
+            const candidates = overview
+                .filter(beach => Number.isFinite(Number(beach.latitude)) && Number.isFinite(Number(beach.longitude)))
+                .map(beach => {
+                    return {
+                        ...beach,
+                        distance: distanceKm(
+                            spot.lat,
+                            spot.lon,
+                            Number(beach.latitude),
+                            Number(beach.longitude)
+                        )
+                    };
+                })
+                .sort((a, b) => a.distance - b.distance);
+
+            return candidates[0] || null;
+        }
+
+        async function fetchVandudsigtenQualityMap() {
+            try {
+                const data = await fetchJsonWithFallback(VANDUDSIGTEN_ENDPOINT);
+
+                const overview = Array.isArray(data?.overview) ? data.overview : [];
+                const measurements = Array.isArray(data?.meassurements)
+                    ? data.meassurements
+                    : Array.isArray(data?.measurements)
+                        ? data.measurements
+                        : [];
+
+                if (!overview.length || !measurements.length) {
+                    throw new Error("Vandudsigten response does not contain overview/meassurements");
+                }
+
+                const map = {};
+
+                SPOTS.forEach(spot => {
+                    const nearestBeach = findNearestBeach(spot, overview);
+
+                    if (!nearestBeach) {
+                        map[spot.id] = {
+                            water_quality: null,
+                            vandudsigten_beach_id: null,
+                            vandudsigten_beach_name: null,
+                            vandudsigten_distance_km: null,
+                            vandudsigten_date: null
+                        };
+                        return;
+                    }
+
+                    const latest = latestMeasurementForBeach(measurements, nearestBeach.id);
+
+                    map[spot.id] = {
+                        water_quality: latest?.water_quality ?? null,
+                        vandudsigten_beach_id: nearestBeach.id ?? null,
+                        vandudsigten_beach_name: nearestBeach.name ?? null,
+                        vandudsigten_distance_km: round1(nearestBeach.distance),
+                        vandudsigten_date: latest?.date ?? null
+                    };
+                });
+
+                return map;
+
+            } catch (error) {
+                console.warn("Vandudsigten quality unavailable", error);
+
+                const emptyMap = {};
+                SPOTS.forEach(spot => {
+                    emptyMap[spot.id] = {
+                        water_quality: null,
+                        vandudsigten_beach_id: null,
+                        vandudsigten_beach_name: null,
+                        vandudsigten_distance_km: null,
+                        vandudsigten_date: null
+                    };
+                });
+
+                return emptyMap;
+            }
+        }
+
+        async function fetchSpot(spot, qualityMap) {
+            const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${spot.lat}&longitude=${spot.lon}&current=temperature_2m,wind_speed_10m,precipitation,weather_code&wind_speed_unit=ms&timezone=Europe%2FCopenhagen&forecast_days=1`;
+            const marineUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${spot.lat}&longitude=${spot.lon}&current=sea_surface_temperature,wave_height&timezone=Europe%2FCopenhagen&cell_selection=nearest&forecast_days=1`;
+
+            const [weather, marine] = await Promise.allSettled([
+                fetchJson(weatherUrl),
+                fetchJson(marineUrl)
+            ]);
+
+            const weatherData = weather.status === "fulfilled" ? weather.value : null;
+            const marineData = marine.status === "fulfilled" ? marine.value : null;
+
+            let waterTemp = null;
+
+            if (marineData?.current?.sea_surface_temperature !== undefined) {
+                waterTemp = marineData.current.sea_surface_temperature;
+            } else if (marineData?.hourly?.sea_surface_temperature && marineData?.hourly?.time) {
+                const i = nearestIndex(marineData.hourly.time);
+                waterTemp = i >= 0 ? marineData.hourly.sea_surface_temperature[i] : null;
+            }
+
+            const quality = qualityMap?.[spot.id] || {};
+
+            return {
+                id: spot.id,
+                label: spot.label,
+                displayName: spot.displayName,
+
+                requested_latitude: spot.lat,
+                requested_longitude: spot.lon,
+
+                weather_grid_latitude: weatherData?.latitude ?? null,
+                weather_grid_longitude: weatherData?.longitude ?? null,
+
+                marine_grid_latitude: marineData?.latitude ?? null,
+                marine_grid_longitude: marineData?.longitude ?? null,
+
+                air_temperature: weatherData?.current?.temperature_2m ?? null,
+                wind_speed: weatherData?.current?.wind_speed_10m ?? null,
+                precipitation: weatherData?.current?.precipitation ?? null,
+                weather_code: weatherData?.current?.weather_code ?? null,
+                water_temperature: waterTemp,
+
+                water_quality: quality.water_quality ?? null,
+                vandudsigten_beach_id: quality.vandudsigten_beach_id ?? null,
+                vandudsigten_beach_name: quality.vandudsigten_beach_name ?? null,
+                vandudsigten_distance_km: quality.vandudsigten_distance_km ?? null,
+                vandudsigten_date: quality.vandudsigten_date ?? null,
+
+                weather_ok: weather.status === "fulfilled",
+                marine_ok: marine.status === "fulfilled",
+                quality_ok: quality.water_quality !== null && quality.water_quality !== undefined
+            };
+        }
+
+        function updateCard(data) {
+            const card = document.getElementById(`card-${data.id}`);
+            const status = document.getElementById(`status-${data.id}`);
+            const quality = document.getElementById(`quality-${data.id}`);
+            const water = document.getElementById(`water-${data.id}`);
+            const air = document.getElementById(`air-${data.id}`);
+            const wind = document.getElementById(`wind-${data.id}`);
+
+            if (!card || !status || !quality || !water || !air || !wind) return;
+
+            const qualityStatus = normalizeWaterQuality(data.water_quality);
+
+            card.className = `spot-card ${qualityStatus.className}`;
+            status.innerHTML = data.displayName || data.label || "";
+
+            quality.innerText = qualityStatus.label;
+            water.innerText = formatTemp(data.water_temperature);
+            air.innerText = formatTemp(data.air_temperature);
+            wind.innerText = formatWind(data.wind_speed);
+
+            if (data.vandudsigten_beach_name) {
+                card.title = `Quality source: ${data.vandudsigten_beach_name} | Date: ${data.vandudsigten_date || "n/a"} | Distance: ${data.vandudsigten_distance_km ?? "n/a"} km`;
+            }
+        }
+
+        async function loadFooterMessages() {
+            try {
+                const response = await fetch("data/messages.json?v=" + Date.now(), {
+                    cache: "no-store"
+                });
+
+                if (!response.ok) {
+                    throw new Error("messages.json not found");
+                }
+
+                const data = await response.json();
+
+                if (!data || typeof data !== "object") {
+                    throw new Error("messages.json has invalid structure");
+                }
+
+                return data;
+
+            } catch (error) {
+                console.warn("Using fallback footer messages", error);
+                return FALLBACK_FOOTER_LINES;
+            }
+        }
+
+        function randomIndex(length) {
+            if (!length) return 0;
+
+            if (window.crypto && crypto.getRandomValues) {
+                const array = new Uint32Array(1);
+                crypto.getRandomValues(array);
+                return array[0] % length;
+            }
+
+            return Math.floor(Math.random() * length);
+        }
+
+        function pickFooterCategory(avgWater, avgAir, avgWind, avgPrecipitation) {
+            const hour = Number(new Intl.DateTimeFormat("en-GB", {
+                timeZone: "Europe/Copenhagen",
+                hour: "2-digit",
+                hour12: false
+            }).format(new Date()));
+
+            if (avgPrecipitation !== null && avgPrecipitation > 0.1) return "moody";
+            if (avgWind !== null && avgWind >= 8) return "moody";
+            if (avgWater !== null && avgWater < 5) return "winter";
+            if (avgAir !== null && avgAir >= 20) return "summer";
+            if (hour >= 6 && hour <= 9) return "early";
+            if (hour >= 16 && hour <= 21) return "evening";
+            if (hour >= 11 && hour <= 14) return "food";
+
+            return "data";
+        }
+
+        async function updateFooter(results) {
+            const payoff = document.getElementById("payoff-text");
+            const source = document.getElementById("source-text");
+            const avgWaterText = document.getElementById("avg-water-text");
+
+            const validWater = results.map(r => round1(r.water_temperature)).filter(v => v !== null);
+            const validAir = results.map(r => round1(r.air_temperature)).filter(v => v !== null);
+            const validWind = results.map(r => round1(r.wind_speed)).filter(v => v !== null);
+            const validPrecipitation = results.map(r => round1(r.precipitation)).filter(v => v !== null);
+
+            const ok = results.filter(r => r.weather_ok || r.marine_ok || r.quality_ok).length;
+
+            if (ok === 0) {
+                payoff.innerHTML = "Live data unavailable.<br>Please check the data source.";
+                source.innerText = "Source: Open-Meteo + Vandudsigten";
+                avgWaterText.innerText = "Average water temperature: --°C";
+                return;
+            }
+
+            const avgWater = validWater.length ? validWater.reduce((a, b) => a + b, 0) / validWater.length : null;
+            const avgAir = validAir.length ? validAir.reduce((a, b) => a + b, 0) / validAir.length : null;
+            const avgWind = validWind.length ? validWind.reduce((a, b) => a + b, 0) / validWind.length : null;
+            const avgPrecipitation = validPrecipitation.length ? validPrecipitation.reduce((a, b) => a + b, 0) / validPrecipitation.length : null;
+
+            const messages = await loadFooterMessages();
+            const category = pickFooterCategory(avgWater, avgAir, avgWind, avgPrecipitation);
+            const lines = messages[category] || messages.data || FALLBACK_FOOTER_LINES.data;
+            const chosen = lines[randomIndex(lines.length)];
+
+            payoff.innerHTML = `${chosen[0]}<br>${chosen[1]}`;
+
+            const qualityOk = results.filter(r => r.quality_ok).length;
+            source.innerText = `Source: Open-Meteo + Vandudsigten | Water quality: ${qualityOk}/${results.length} spots`;
+            avgWaterText.innerText = `Average water temperature: ${formatTemp(avgWater)}`;
+        }
+
+        async function load() {
+            setDate();
+
+            try {
+                const qualityMap = await fetchVandudsigtenQualityMap();
+                const results = await Promise.all(SPOTS.map(spot => fetchSpot(spot, qualityMap)));
+
+                results.forEach(updateCard);
+                await updateFooter(results);
+
+                console.table(results.map(r => ({
+                    spot: r.label,
+                    quality: r.water_quality,
+                    quality_label: normalizeWaterQuality(r.water_quality).label,
+                    vandudsigten_beach: r.vandudsigten_beach_name,
+                    distance_km: r.vandudsigten_distance_km,
+                    date: r.vandudsigten_date,
+                    water_temp: r.water_temperature,
+                    air_temp: r.air_temperature,
+                    wind: r.wind_speed
+                })));
+
+            } catch (error) {
+                console.error("General loading error", error);
+
+                SPOTS.forEach(spot => {
+                    updateCard({
+                        id: spot.id,
+                        label: spot.label,
+                        displayName: spot.displayName,
+                        water_quality: null,
+                        water_temperature: null,
+                        air_temperature: null,
+                        wind_speed: null,
+                        weather_ok: false,
+                        marine_ok: false,
+                        quality_ok: false
+                    });
+                });
+
+                document.getElementById("payoff-text").innerHTML = "Live data unavailable.<br>Please check the data source.";
+                document.getElementById("source-text").innerText = "Source: Open-Meteo + Vandudsigten";
+                document.getElementById("avg-water-text").innerText = "Average water temperature: --°C";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", load);
+    </script>
+</body>
+
+</html>

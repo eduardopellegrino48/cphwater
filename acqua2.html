@@ -490,8 +490,6 @@
             }
         ];
 
-        const VANDUDSIGTEN_ENDPOINT = "http://api.vandudsigten.dk/doc/beaches";
-
         const FALLBACK_FOOTER_LINES = {
             early: [
                 ["City is still asleep.", "The water is wide awake."],
@@ -612,179 +610,92 @@
             return response.json();
         }
 
-        async function fetchJsonWithFallback(url) {
-            const urls = [
-                url,
-                url.replace("http://", "https://"),
-                "https://api.allorigins.win/raw?url=" + encodeURIComponent(url)
-            ];
-
-            let lastError = null;
-
-            for (const candidateUrl of urls) {
-                try {
-                    return await fetchJson(candidateUrl);
-                } catch (error) {
-                    lastError = error;
-                    console.warn("Fetch failed:", candidateUrl, error);
-                }
-            }
-
-            throw lastError || new Error("All fetch attempts failed");
-        }
-
         function normalizeWaterQuality(value) {
             const q = Number(value);
 
             if (!Number.isFinite(q)) {
                 return {
                     className: "status-unknown",
-                    label: "Unknown"
+                    label: "Unknown",
+                    status: "unknown"
                 };
             }
 
             if (q === 1) {
                 return {
                     className: "status-bad",
-                    label: "Bad"
+                    label: "Bad",
+                    status: "bad"
                 };
             }
 
             if (q === 2) {
                 return {
                     className: "status-good",
-                    label: "Good"
+                    label: "Good",
+                    status: "good"
                 };
             }
 
             if (q === 3) {
                 return {
                     className: "status-warning",
-                    label: "Warning"
+                    label: "Warning",
+                    status: "warning"
                 };
             }
 
             if (q === 4) {
                 return {
                     className: "status-unknown",
-                    label: "No data"
+                    label: "No data",
+                    status: "unknown"
                 };
             }
 
             return {
                 className: "status-unknown",
-                label: "Unknown"
+                label: "Unknown",
+                status: "unknown"
             };
-        }
-
-        function toRad(value) {
-            return value * Math.PI / 180;
-        }
-
-        function distanceKm(lat1, lon1, lat2, lon2) {
-            const R = 6371;
-            const dLat = toRad(lat2 - lat1);
-            const dLon = toRad(lon2 - lon1);
-
-            const a =
-                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
-                Math.sin(dLon / 2) * Math.sin(dLon / 2);
-
-            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        }
-
-        function parseDateSafe(value) {
-            const d = new Date(value);
-            return Number.isNaN(d.getTime()) ? null : d;
-        }
-
-        function latestMeasurementForBeach(measurements, beachId) {
-            const rows = measurements
-                .filter(row => Number(row.id) === Number(beachId))
-                .filter(row => row.water_quality !== undefined && row.water_quality !== null);
-
-            if (!rows.length) return null;
-
-            rows.sort((a, b) => {
-                const da = parseDateSafe(a.date)?.getTime() ?? 0;
-                const db = parseDateSafe(b.date)?.getTime() ?? 0;
-                return db - da;
-            });
-
-            return rows[0];
-        }
-
-        function findNearestBeach(spot, overview) {
-            const candidates = overview
-                .filter(beach => Number.isFinite(Number(beach.latitude)) && Number.isFinite(Number(beach.longitude)))
-                .map(beach => {
-                    return {
-                        ...beach,
-                        distance: distanceKm(
-                            spot.lat,
-                            spot.lon,
-                            Number(beach.latitude),
-                            Number(beach.longitude)
-                        )
-                    };
-                })
-                .sort((a, b) => a.distance - b.distance);
-
-            return candidates[0] || null;
         }
 
         async function fetchVandudsigtenQualityMap() {
             try {
-                const data = await fetchJsonWithFallback(VANDUDSIGTEN_ENDPOINT);
+                const data = await fetchJson("/api/water-quality?v=" + Date.now());
 
-                const overview = Array.isArray(data?.overview) ? data.overview : [];
-                const measurements = Array.isArray(data?.meassurements)
-                    ? data.meassurements
-                    : Array.isArray(data?.measurements)
-                        ? data.measurements
-                        : [];
-
-                if (!overview.length || !measurements.length) {
-                    throw new Error("Vandudsigten response does not contain overview/meassurements");
+                if (!data || !Array.isArray(data.spots)) {
+                    throw new Error("Invalid /api/water-quality response");
                 }
 
                 const map = {};
 
-                SPOTS.forEach(spot => {
-                    const nearestBeach = findNearestBeach(spot, overview);
-
-                    if (!nearestBeach) {
-                        map[spot.id] = {
-                            water_quality: null,
-                            vandudsigten_beach_id: null,
-                            vandudsigten_beach_name: null,
-                            vandudsigten_distance_km: null,
-                            vandudsigten_date: null
-                        };
-                        return;
-                    }
-
-                    const latest = latestMeasurementForBeach(measurements, nearestBeach.id);
-
+                data.spots.forEach(spot => {
                     map[spot.id] = {
-                        water_quality: latest?.water_quality ?? null,
-                        vandudsigten_beach_id: nearestBeach.id ?? null,
-                        vandudsigten_beach_name: nearestBeach.name ?? null,
-                        vandudsigten_distance_km: round1(nearestBeach.distance),
-                        vandudsigten_date: latest?.date ?? null
+                        water_quality: spot.water_quality ?? null,
+                        water_quality_label: spot.water_quality_label ?? "Unknown",
+                        water_quality_status: spot.water_quality_status ?? "unknown",
+
+                        vandudsigten_beach_id: spot.source_beach_id ?? null,
+                        vandudsigten_beach_name: spot.source_beach_name ?? null,
+                        vandudsigten_distance_km: spot.source_distance_km ?? null,
+                        vandudsigten_date: spot.source_date ?? null
                     };
                 });
 
                 return map;
 
             } catch (error) {
-                console.warn("Vandudsigten quality unavailable", error);
+                console.warn("Internal water quality API unavailable", error);
 
                 const emptyMap = {};
+
                 SPOTS.forEach(spot => {
                     emptyMap[spot.id] = {
                         water_quality: null,
+                        water_quality_label: "Unknown",
+                        water_quality_status: "unknown",
+
                         vandudsigten_beach_id: null,
                         vandudsigten_beach_name: null,
                         vandudsigten_distance_km: null,
@@ -840,6 +751,9 @@
                 water_temperature: waterTemp,
 
                 water_quality: quality.water_quality ?? null,
+                water_quality_label: quality.water_quality_label ?? "Unknown",
+                water_quality_status: quality.water_quality_status ?? "unknown",
+
                 vandudsigten_beach_id: quality.vandudsigten_beach_id ?? null,
                 vandudsigten_beach_name: quality.vandudsigten_beach_name ?? null,
                 vandudsigten_distance_km: quality.vandudsigten_distance_km ?? null,
@@ -866,7 +780,7 @@
             card.className = `spot-card ${qualityStatus.className}`;
             status.innerHTML = data.displayName || data.label || "";
 
-            quality.innerText = qualityStatus.label;
+            quality.innerText = data.water_quality_label || qualityStatus.label;
             water.innerText = formatTemp(data.water_temperature);
             air.innerText = formatTemp(data.air_temperature);
             wind.innerText = formatWind(data.wind_speed);
@@ -979,7 +893,7 @@
                 console.table(results.map(r => ({
                     spot: r.label,
                     quality: r.water_quality,
-                    quality_label: normalizeWaterQuality(r.water_quality).label,
+                    quality_label: r.water_quality_label,
                     vandudsigten_beach: r.vandudsigten_beach_name,
                     distance_km: r.vandudsigten_distance_km,
                     date: r.vandudsigten_date,
@@ -997,6 +911,8 @@
                         label: spot.label,
                         displayName: spot.displayName,
                         water_quality: null,
+                        water_quality_label: "Unknown",
+                        water_quality_status: "unknown",
                         water_temperature: null,
                         air_temperature: null,
                         wind_speed: null,

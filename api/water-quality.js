@@ -1,4 +1,7 @@
-const VANDUDSIGTEN_ENDPOINT = "http://api.vandudsigten.dk/doc/beaches";
+const VANDUDSIGTEN_ENDPOINTS = [
+    "https://api.vandudsigten.dk/doc/beaches",
+    "http://api.vandudsigten.dk/doc/beaches"
+];
 
 const SPOTS = [
     {
@@ -64,6 +67,16 @@ function distanceKm(lat1, lon1, lat2, lon2) {
 function parseDateSafe(value) {
     const d = new Date(value);
     return Number.isNaN(d.getTime()) ? null : d;
+}
+
+function getArrayByPossibleNames(data, names) {
+    for (const name of names) {
+        if (Array.isArray(data?.[name])) {
+            return data[name];
+        }
+    }
+
+    return [];
 }
 
 function latestMeasurementForBeach(measurements, beachId) {
@@ -152,6 +165,61 @@ function normalizeWaterQuality(value) {
     };
 }
 
+async function fetchVandudsigten() {
+    const attempts = [];
+
+    for (const endpoint of VANDUDSIGTEN_ENDPOINTS) {
+        try {
+            const response = await fetch(endpoint, {
+                headers: {
+                    "Accept": "application/json,text/plain,*/*",
+                    "User-Agent": "Copenhagen-Water-Index/1.0"
+                }
+            });
+
+            const contentType = response.headers.get("content-type") || "";
+            const text = await response.text();
+
+            attempts.push({
+                endpoint,
+                status: response.status,
+                ok: response.ok,
+                content_type: contentType,
+                preview: text.slice(0, 500)
+            });
+
+            if (!response.ok) {
+                continue;
+            }
+
+            let data;
+
+            try {
+                data = JSON.parse(text);
+            } catch (jsonError) {
+                attempts[attempts.length - 1].json_error = jsonError.message;
+                continue;
+            }
+
+            return {
+                data,
+                attempts
+            };
+
+        } catch (error) {
+            attempts.push({
+                endpoint,
+                error: error.message
+            });
+        }
+    }
+
+    return {
+        data: null,
+        attempts
+    };
+}
+
 export default async function handler(req, res) {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
@@ -167,30 +235,48 @@ export default async function handler(req, res) {
         });
     }
 
+    const debugMode = req.query?.debug === "1";
+
     try {
-        const response = await fetch(VANDUDSIGTEN_ENDPOINT, {
-            headers: {
-                "Accept": "application/json",
-                "User-Agent": "Copenhagen-Water-Index/1.0"
-            }
-        });
+        const fetched = await fetchVandudsigten();
 
-        if (!response.ok) {
-            throw new Error(`Vandudsigten HTTP ${response.status}`);
+        if (!fetched.data) {
+            return res.status(500).json({
+                source: "Vandudsigten",
+                generated_at: new Date().toISOString(),
+                error: "Unable to retrieve valid JSON from Vandudsigten",
+                quality_count: 0,
+                debug: fetched.attempts,
+                spots: SPOTS.map(spot => ({
+                    id: spot.id,
+                    label: spot.label,
+                    water_quality: null,
+                    water_quality_label: "Unknown",
+                    water_quality_status: "unknown",
+                    source_beach_id: null,
+                    source_beach_name: null,
+                    source_distance_km: null,
+                    source_date: null
+                }))
+            });
         }
 
-        const data = await response.json();
+        const data = fetched.data;
 
-        const overview = Array.isArray(data?.overview) ? data.overview : [];
-        const measurements = Array.isArray(data?.meassurements)
-            ? data.meassurements
-            : Array.isArray(data?.measurements)
-                ? data.measurements
-                : [];
+        const overview = getArrayByPossibleNames(data, [
+            "overview",
+            "beaches",
+            "Beach",
+            "beach"
+        ]);
 
-        if (!overview.length || !measurements.length) {
-            throw new Error("Invalid Vandudsigten response structure");
-        }
+        const measurements = getArrayByPossibleNames(data, [
+            "meassurements",
+            "measurements",
+            "measurement",
+            "Measure",
+            "measures"
+        ]);
 
         const spots = SPOTS.map(spot => {
             const nearestBeach = findNearestBeach(spot, overview);
@@ -217,14 +303,28 @@ export default async function handler(req, res) {
 
         res.setHeader(
             "Cache-Control",
-            "s-maxage=900, stale-while-revalidate=3600"
+            "s-maxage=60, stale-while-revalidate=300"
         );
 
-        return res.status(200).json({
+        const payload = {
             source: "Vandudsigten",
             generated_at: new Date().toISOString(),
+            overview_count: overview.length,
+            measurements_count: measurements.length,
+            quality_count: spots.filter(spot => spot.water_quality !== null).length,
             spots
-        });
+        };
+
+        if (debugMode) {
+            payload.debug = {
+                fetch_attempts: fetched.attempts,
+                top_level_keys: Object.keys(data || {}),
+                overview_sample: overview.slice(0, 5),
+                measurements_sample: measurements.slice(0, 5)
+            };
+        }
+
+        return res.status(200).json(payload);
 
     } catch (error) {
         console.error("Water quality API error:", error);
@@ -234,6 +334,7 @@ export default async function handler(req, res) {
             generated_at: new Date().toISOString(),
             error: "Unable to retrieve water quality data",
             details: error.message,
+            quality_count: 0,
             spots: SPOTS.map(spot => ({
                 id: spot.id,
                 label: spot.label,

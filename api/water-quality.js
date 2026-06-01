@@ -1,6 +1,10 @@
+const ORIGINAL_ENDPOINT = "http://api.vandudsigten.dk/doc/beaches";
+
 const VANDUDSIGTEN_ENDPOINTS = [
     "https://api.vandudsigten.dk/doc/beaches",
-    "http://api.vandudsigten.dk/doc/beaches"
+    "http://api.vandudsigten.dk/doc/beaches",
+    "https://api.allorigins.win/raw?url=" + encodeURIComponent(ORIGINAL_ENDPOINT),
+    "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(ORIGINAL_ENDPOINT)
 ];
 
 const SPOTS = [
@@ -165,12 +169,28 @@ function normalizeWaterQuality(value) {
     };
 }
 
+async function fetchWithTimeout(url, options = {}, timeoutMs = 12000) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+    try {
+        const response = await fetch(url, {
+            ...options,
+            signal: controller.signal
+        });
+
+        return response;
+    } finally {
+        clearTimeout(timeout);
+    }
+}
+
 async function fetchVandudsigten() {
     const attempts = [];
 
     for (const endpoint of VANDUDSIGTEN_ENDPOINTS) {
         try {
-            const response = await fetch(endpoint, {
+            const response = await fetchWithTimeout(endpoint, {
                 headers: {
                     "Accept": "application/json,text/plain,*/*",
                     "User-Agent": "Copenhagen-Water-Index/1.0"
@@ -209,7 +229,7 @@ async function fetchVandudsigten() {
         } catch (error) {
             attempts.push({
                 endpoint,
-                error: error.message
+                error: error.name === "AbortError" ? "timeout" : error.message
             });
         }
     }
@@ -218,6 +238,20 @@ async function fetchVandudsigten() {
         data: null,
         attempts
     };
+}
+
+function buildFallbackSpots() {
+    return SPOTS.map(spot => ({
+        id: spot.id,
+        label: spot.label,
+        water_quality: null,
+        water_quality_label: "Unknown",
+        water_quality_status: "unknown",
+        source_beach_id: null,
+        source_beach_name: null,
+        source_distance_km: null,
+        source_date: null
+    }));
 }
 
 export default async function handler(req, res) {
@@ -247,17 +281,7 @@ export default async function handler(req, res) {
                 error: "Unable to retrieve valid JSON from Vandudsigten",
                 quality_count: 0,
                 debug: fetched.attempts,
-                spots: SPOTS.map(spot => ({
-                    id: spot.id,
-                    label: spot.label,
-                    water_quality: null,
-                    water_quality_label: "Unknown",
-                    water_quality_status: "unknown",
-                    source_beach_id: null,
-                    source_beach_name: null,
-                    source_distance_km: null,
-                    source_date: null
-                }))
+                spots: buildFallbackSpots()
             });
         }
 
@@ -335,17 +359,7 @@ export default async function handler(req, res) {
             error: "Unable to retrieve water quality data",
             details: error.message,
             quality_count: 0,
-            spots: SPOTS.map(spot => ({
-                id: spot.id,
-                label: spot.label,
-                water_quality: null,
-                water_quality_label: "Unknown",
-                water_quality_status: "unknown",
-                source_beach_id: null,
-                source_beach_name: null,
-                source_distance_km: null,
-                source_date: null
-            }))
+            spots: buildFallbackSpots()
         });
     }
 }

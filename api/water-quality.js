@@ -215,6 +215,11 @@ export default async function handler(req, res) {
             };
         });
 
+        res.setHeader(
+            "Cache-Control",
+            "s-maxage=900, stale-while-revalidate=3600"
+        );
+
         return res.status(200).json({
             source: "Vandudsigten",
             generated_at: new Date().toISOString(),

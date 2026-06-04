@@ -1,7 +1,7 @@
 {
   "status": "success",
-  "updated_at_utc": "2026-06-04T12:26:04.013Z",
-  "updated_at_copenhagen": "2026-06-04 14:26:04",
+  "updated_at_utc": "2026-06-04T15:56:54.532Z",
+  "updated_at_copenhagen": "2026-06-04 17:56:54",
   "note": "Weather and marine-condition data. This is not official bacteriological bathing-water quality.",
   "sources": [
     "https://api.open-meteo.com/v1/forecast",
@@ -15,15 +15,13 @@
       "longitude": 12.5985,
       "status": "live",
       "water_temperature": 15,
-      "air_temperature": null,
-      "wind_speed": null,
+      "air_temperature": 19,
+      "wind_speed": 5.7,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
       },
-      "errors": [
-        "weather: fetch failed"
-      ]
+      "errors": []
     },
     {
       "id": "refshaleoen",
@@ -32,15 +30,13 @@
       "longitude": 12.6128,
       "status": "live",
       "water_temperature": 15,
-      "air_temperature": null,
-      "wind_speed": null,
+      "air_temperature": 19,
+      "wind_speed": 6.3,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
       },
-      "errors": [
-        "weather: HTTP 502 for https://api.open-meteo.com/v1/forecast?latitude=55.6936&longitude=12.6128&current=temperature_2m,wind_speed_10m&wind_speed_unit=ms&timezone=Europe%2FCopenhagen"
-      ]
+      "errors": []
     },
     {
       "id": "indre-by",
@@ -49,15 +45,13 @@
       "longitude": 12.5789,
       "status": "live",
       "water_temperature": 16,
-      "air_temperature": null,
-      "wind_speed": null,
+      "air_temperature": 20,
+      "wind_speed": 4.6,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
       },
-      "errors": [
-        "weather: HTTP 502 for https://api.open-meteo.com/v1/forecast?latitude=55.6741&longitude=12.5789&current=temperature_2m,wind_speed_10m&wind_speed_unit=ms&timezone=Europe%2FCopenhagen"
-      ]
+      "errors": []
     },
     {
       "id": "islands-brygge",
@@ -66,15 +60,13 @@
       "longitude": 12.5794,
       "status": "live",
       "water_temperature": 15,
-      "air_temperature": null,
-      "wind_speed": null,
+      "air_temperature": 20,
+      "wind_speed": 4.8,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
       },
-      "errors": [
-        "weather: HTTP 502 for https://api.open-meteo.com/v1/forecast?latitude=55.6635&longitude=12.5794&current=temperature_2m,wind_speed_10m&wind_speed_unit=ms&timezone=Europe%2FCopenhagen"
-      ]
+      "errors": []
     },
     {
       "id": "amager-strandpark",
@@ -82,16 +74,14 @@
       "latitude": 55.6565,
       "longitude": 12.6412,
       "status": "live",
-      "water_temperature": 14,
-      "air_temperature": null,
-      "wind_speed": null,
+      "water_temperature": 15,
+      "air_temperature": 20,
+      "wind_speed": 5.6,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
       },
-      "errors": [
-        "weather: HTTP 502 for https://api.open-meteo.com/v1/forecast?latitude=55.6565&longitude=12.6412&current=temperature_2m,wind_speed_10m&wind_speed_unit=ms&timezone=Europe%2FCopenhagen"
-      ]
+      "errors": []
     },
     {
       "id": "kbh-sv",
@@ -100,15 +90,13 @@
       "longitude": 12.5485,
       "status": "live",
       "water_temperature": 15,
-      "air_temperature": null,
-      "wind_speed": null,
+      "air_temperature": 20,
+      "wind_speed": 5.2,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
       },
-      "errors": [
-        "weather: HTTP 502 for https://api.open-meteo.com/v1/forecast?latitude=55.6485&longitude=12.5485&current=temperature_2m,wind_speed_10m&wind_speed_unit=ms&timezone=Europe%2FCopenhagen"
-      ]
+      "errors": []
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "status": "success",
-  "updated_at_utc": "2026-06-13T12:21:15.987Z",
-  "updated_at_copenhagen": "2026-06-13 14:21:15",
+  "updated_at_utc": "2026-06-13T14:35:28.939Z",
+  "updated_at_copenhagen": "2026-06-13 16:35:28",
   "note": "Weather and marine-condition data. This is not official bacteriological bathing-water quality.",
   "sources": [
     "https://api.open-meteo.com/v1/forecast",
@@ -15,13 +15,15 @@
       "longitude": 12.5985,
       "status": "live",
       "water_temperature": 17,
-      "air_temperature": 16,
-      "wind_speed": 5.7,
+      "air_temperature": null,
+      "wind_speed": null,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
       },
-      "errors": []
+      "errors": [
+        "weather: fetch failed"
+      ]
     },
     {
       "id": "refshaleoen",
@@ -29,14 +31,17 @@
       "latitude": 55.6936,
       "longitude": 12.6128,
       "status": "live",
-      "water_temperature": 17,
-      "air_temperature": 16,
-      "wind_speed": 6.1,
+      "water_temperature": 0,
+      "air_temperature": null,
+      "wind_speed": null,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
       },
-      "errors": []
+      "errors": [
+        "weather: fetch failed",
+        "marine: fetch failed"
+      ]
     },
     {
       "id": "indre-by",
@@ -45,8 +50,8 @@
       "longitude": 12.5789,
       "status": "live",
       "water_temperature": 17,
-      "air_temperature": 16,
-      "wind_speed": 4.9,
+      "air_temperature": 15,
+      "wind_speed": 5,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
@@ -60,7 +65,7 @@
       "longitude": 12.5794,
       "status": "live",
       "water_temperature": 17,
-      "air_temperature": 16,
+      "air_temperature": 15,
       "wind_speed": 5.2,
       "source": {
         "weather": "Open-Meteo Forecast API",
@@ -75,8 +80,8 @@
       "longitude": 12.6412,
       "status": "live",
       "water_temperature": 17,
-      "air_temperature": 16,
-      "wind_speed": 5.6,
+      "air_temperature": 15,
+      "wind_speed": 5.8,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
@@ -90,8 +95,8 @@
       "longitude": 12.5485,
       "status": "live",
       "water_temperature": 17,
-      "air_temperature": 16,
-      "wind_speed": 5.6,
+      "air_temperature": 15,
+      "wind_speed": 5.5,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"

@@ -1,7 +1,7 @@
 {
   "status": "success",
-  "updated_at_utc": "2026-07-19T11:05:38.103Z",
-  "updated_at_copenhagen": "2026-07-19 13:05:38",
+  "updated_at_utc": "2026-07-19T12:11:48.977Z",
+  "updated_at_copenhagen": "2026-07-19 14:11:48",
   "note": "Weather and marine-condition data. This is not official bacteriological bathing-water quality.",
   "sources": [
     "https://api.open-meteo.com/v1/forecast",
@@ -14,14 +14,16 @@
       "latitude": 55.7082,
       "longitude": 12.5985,
       "status": "live",
-      "water_temperature": 18,
-      "air_temperature": 20,
-      "wind_speed": 3.7,
+      "water_temperature": 17,
+      "air_temperature": null,
+      "wind_speed": null,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
       },
-      "errors": []
+      "errors": [
+        "weather: HTTP 429 for https://api.open-meteo.com/v1/forecast?latitude=55.7082&longitude=12.5985&current=temperature_2m,wind_speed_10m&wind_speed_unit=ms&timezone=Europe%2FCopenhagen"
+      ]
     },
     {
       "id": "refshaleoen",
@@ -29,14 +31,16 @@
       "latitude": 55.6936,
       "longitude": 12.6128,
       "status": "live",
-      "water_temperature": 18,
-      "air_temperature": 20,
-      "wind_speed": 4,
+      "water_temperature": 17,
+      "air_temperature": null,
+      "wind_speed": null,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
       },
-      "errors": []
+      "errors": [
+        "weather: HTTP 429 for https://api.open-meteo.com/v1/forecast?latitude=55.6936&longitude=12.6128&current=temperature_2m,wind_speed_10m&wind_speed_unit=ms&timezone=Europe%2FCopenhagen"
+      ]
     },
     {
       "id": "indre-by",
@@ -45,13 +49,15 @@
       "longitude": 12.5789,
       "status": "live",
       "water_temperature": 18,
-      "air_temperature": 19,
-      "wind_speed": 3.4,
+      "air_temperature": null,
+      "wind_speed": null,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
       },
-      "errors": []
+      "errors": [
+        "weather: HTTP 429 for https://api.open-meteo.com/v1/forecast?latitude=55.6741&longitude=12.5789&current=temperature_2m,wind_speed_10m&wind_speed_unit=ms&timezone=Europe%2FCopenhagen"
+      ]
     },
     {
       "id": "islands-brygge",
@@ -60,13 +66,15 @@
       "longitude": 12.5794,
       "status": "live",
       "water_temperature": 17,
-      "air_temperature": 19,
-      "wind_speed": 3.7,
+      "air_temperature": null,
+      "wind_speed": null,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
       },
-      "errors": []
+      "errors": [
+        "weather: HTTP 429 for https://api.open-meteo.com/v1/forecast?latitude=55.6635&longitude=12.5794&current=temperature_2m,wind_speed_10m&wind_speed_unit=ms&timezone=Europe%2FCopenhagen"
+      ]
     },
     {
       "id": "amager-strandpark",
@@ -75,13 +83,15 @@
       "longitude": 12.6412,
       "status": "live",
       "water_temperature": 17,
-      "air_temperature": 20,
-      "wind_speed": 4.3,
+      "air_temperature": null,
+      "wind_speed": null,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
       },
-      "errors": []
+      "errors": [
+        "weather: HTTP 429 for https://api.open-meteo.com/v1/forecast?latitude=55.6565&longitude=12.6412&current=temperature_2m,wind_speed_10m&wind_speed_unit=ms&timezone=Europe%2FCopenhagen"
+      ]
     },
     {
       "id": "kbh-sv",
@@ -90,13 +100,15 @@
       "longitude": 12.5485,
       "status": "live",
       "water_temperature": 17,
-      "air_temperature": 20,
-      "wind_speed": 4,
+      "air_temperature": null,
+      "wind_speed": null,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
       },
-      "errors": []
+      "errors": [
+        "weather: HTTP 429 for https://api.open-meteo.com/v1/forecast?latitude=55.6485&longitude=12.5485&current=temperature_2m,wind_speed_10m&wind_speed_unit=ms&timezone=Europe%2FCopenhagen"
+      ]
     }
   ]
 }

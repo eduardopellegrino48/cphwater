@@ -1,7 +1,7 @@
 {
   "status": "success",
-  "updated_at_utc": "2026-08-10T13:51:41.040Z",
-  "updated_at_copenhagen": "2026-08-10 15:51:41",
+  "updated_at_utc": "2026-08-10T14:51:18.688Z",
+  "updated_at_copenhagen": "2026-08-10 16:51:18",
   "note": "Weather and marine-condition data. This is not official bacteriological bathing-water quality.",
   "sources": [
     "https://api.open-meteo.com/v1/forecast",
@@ -44,9 +44,9 @@
       "latitude": 55.6741,
       "longitude": 12.5789,
       "status": "live",
-      "water_temperature": 18,
-      "air_temperature": 22,
-      "wind_speed": 4.7,
+      "water_temperature": 19,
+      "air_temperature": 23,
+      "wind_speed": 4.8,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"

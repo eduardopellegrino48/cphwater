@@ -1,7 +1,7 @@
 {
   "status": "success",
-  "updated_at_utc": "2026-08-11T10:24:59.110Z",
-  "updated_at_copenhagen": "2026-08-11 12:24:59",
+  "updated_at_utc": "2026-08-11T11:12:07.401Z",
+  "updated_at_copenhagen": "2026-08-11 13:12:07",
   "note": "Weather and marine-condition data. This is not official bacteriological bathing-water quality.",
   "sources": [
     "https://api.open-meteo.com/v1/forecast",
@@ -14,8 +14,8 @@
       "latitude": 55.7082,
       "longitude": 12.5985,
       "status": "live",
-      "water_temperature": 18,
-      "air_temperature": 19,
+      "water_temperature": 19,
+      "air_temperature": 20,
       "wind_speed": 6.1,
       "source": {
         "weather": "Open-Meteo Forecast API",
@@ -29,9 +29,9 @@
       "latitude": 55.6936,
       "longitude": 12.6128,
       "status": "live",
-      "water_temperature": 18,
-      "air_temperature": 19,
-      "wind_speed": 6.5,
+      "water_temperature": 19,
+      "air_temperature": 20,
+      "wind_speed": 6.6,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
@@ -45,8 +45,8 @@
       "longitude": 12.5789,
       "status": "live",
       "water_temperature": 19,
-      "air_temperature": 19,
-      "wind_speed": 5.2,
+      "air_temperature": 20,
+      "wind_speed": 5.3,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
@@ -60,8 +60,8 @@
       "longitude": 12.5794,
       "status": "live",
       "water_temperature": 18,
-      "air_temperature": 19,
-      "wind_speed": 5.4,
+      "air_temperature": 20,
+      "wind_speed": 5.5,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
@@ -74,9 +74,9 @@
       "latitude": 55.6565,
       "longitude": 12.6412,
       "status": "live",
-      "water_temperature": 18,
-      "air_temperature": 19,
-      "wind_speed": 6,
+      "water_temperature": 19,
+      "air_temperature": 20,
+      "wind_speed": 6.1,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"

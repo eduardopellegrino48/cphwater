@@ -1,7 +1,7 @@
 {
   "status": "success",
-  "updated_at_utc": "2026-08-21T05:02:00.491Z",
-  "updated_at_copenhagen": "2026-08-21 07:02:00",
+  "updated_at_utc": "2026-08-21T05:55:28.308Z",
+  "updated_at_copenhagen": "2026-08-21 07:55:28",
   "note": "Weather and marine-condition data. This is not official bacteriological bathing-water quality.",
   "sources": [
     "https://api.open-meteo.com/v1/forecast",
@@ -16,7 +16,7 @@
       "status": "live",
       "water_temperature": 17,
       "air_temperature": 16,
-      "wind_speed": 3.5,
+      "wind_speed": 3.7,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
@@ -30,8 +30,8 @@
       "longitude": 12.6128,
       "status": "live",
       "water_temperature": 17,
-      "air_temperature": 15,
-      "wind_speed": 3.8,
+      "air_temperature": 16,
+      "wind_speed": 4.1,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
@@ -45,7 +45,7 @@
       "longitude": 12.5789,
       "status": "live",
       "water_temperature": 18,
-      "air_temperature": 15,
+      "air_temperature": 16,
       "wind_speed": 3,
       "source": {
         "weather": "Open-Meteo Forecast API",
@@ -60,7 +60,7 @@
       "longitude": 12.5794,
       "status": "live",
       "water_temperature": 17,
-      "air_temperature": 15,
+      "air_temperature": 16,
       "wind_speed": 3.1,
       "source": {
         "weather": "Open-Meteo Forecast API",
@@ -75,8 +75,8 @@
       "longitude": 12.6412,
       "status": "live",
       "water_temperature": 17,
-      "air_temperature": 15,
-      "wind_speed": 3.4,
+      "air_temperature": 16,
+      "wind_speed": 3.6,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
@@ -90,7 +90,7 @@
       "longitude": 12.5485,
       "status": "live",
       "water_temperature": 17,
-      "air_temperature": 15,
+      "air_temperature": 16,
       "wind_speed": 3.3,
       "source": {
         "weather": "Open-Meteo Forecast API",

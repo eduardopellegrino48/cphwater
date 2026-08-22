@@ -1,7 +1,7 @@
 {
   "status": "success",
-  "updated_at_utc": "2026-08-22T13:49:56.882Z",
-  "updated_at_copenhagen": "2026-08-22 15:49:56",
+  "updated_at_utc": "2026-08-22T14:13:36.789Z",
+  "updated_at_copenhagen": "2026-08-22 16:13:36",
   "note": "Weather and marine-condition data. This is not official bacteriological bathing-water quality.",
   "sources": [
     "https://api.open-meteo.com/v1/forecast",

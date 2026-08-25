@@ -1,7 +1,7 @@
 {
   "status": "success",
-  "updated_at_utc": "2026-08-25T15:34:28.652Z",
-  "updated_at_copenhagen": "2026-08-25 17:34:28",
+  "updated_at_utc": "2026-08-25T16:27:15.597Z",
+  "updated_at_copenhagen": "2026-08-25 18:27:15",
   "note": "Weather and marine-condition data. This is not official bacteriological bathing-water quality.",
   "sources": [
     "https://api.open-meteo.com/v1/forecast",
@@ -16,7 +16,7 @@
       "status": "live",
       "water_temperature": 16,
       "air_temperature": 22,
-      "wind_speed": 2.8,
+      "wind_speed": 3,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
@@ -31,7 +31,7 @@
       "status": "live",
       "water_temperature": 16,
       "air_temperature": 22,
-      "wind_speed": 3,
+      "wind_speed": 3.2,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
@@ -46,7 +46,7 @@
       "status": "live",
       "water_temperature": 17,
       "air_temperature": 23,
-      "wind_speed": 2.6,
+      "wind_speed": 2.7,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
@@ -61,7 +61,7 @@
       "status": "live",
       "water_temperature": 17,
       "air_temperature": 23,
-      "wind_speed": 2.6,
+      "wind_speed": 2.8,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
@@ -76,7 +76,7 @@
       "status": "live",
       "water_temperature": 16,
       "air_temperature": 23,
-      "wind_speed": 2.9,
+      "wind_speed": 3.1,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
@@ -90,8 +90,8 @@
       "longitude": 12.5485,
       "status": "live",
       "water_temperature": 17,
-      "air_temperature": 23,
-      "wind_speed": 2.8,
+      "air_temperature": 22,
+      "wind_speed": 2.9,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"

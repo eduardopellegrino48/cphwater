@@ -1,7 +1,7 @@
 {
   "status": "success",
-  "updated_at_utc": "2026-11-19T01:20:31.684Z",
-  "updated_at_copenhagen": "2026-11-19 02:20:31",
+  "updated_at_utc": "2026-11-19T09:00:02.493Z",
+  "updated_at_copenhagen": "2026-11-19 10:00:02",
   "note": "Weather and marine-condition data. This is not official bacteriological bathing-water quality.",
   "sources": [
     "https://api.open-meteo.com/v1/forecast",
@@ -14,14 +14,16 @@
       "latitude": 55.7082,
       "longitude": 12.5985,
       "status": "live",
-      "water_temperature": 9,
-      "air_temperature": 5,
-      "wind_speed": 3.6,
+      "water_temperature": 8,
+      "air_temperature": null,
+      "wind_speed": null,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
       },
-      "errors": []
+      "errors": [
+        "weather: fetch failed"
+      ]
     },
     {
       "id": "refshaleoen",
@@ -29,14 +31,17 @@
       "latitude": 55.6936,
       "longitude": 12.6128,
       "status": "live",
-      "water_temperature": 9,
-      "air_temperature": 5,
-      "wind_speed": 4,
+      "water_temperature": 0,
+      "air_temperature": null,
+      "wind_speed": null,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
       },
-      "errors": []
+      "errors": [
+        "weather: fetch failed",
+        "marine: fetch failed"
+      ]
     },
     {
       "id": "indre-by",
@@ -45,13 +50,15 @@
       "longitude": 12.5789,
       "status": "live",
       "water_temperature": 8,
-      "air_temperature": 5,
-      "wind_speed": 3,
+      "air_temperature": null,
+      "wind_speed": null,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
       },
-      "errors": []
+      "errors": [
+        "weather: fetch failed"
+      ]
     },
     {
       "id": "islands-brygge",
@@ -59,14 +66,17 @@
       "latitude": 55.6635,
       "longitude": 12.5794,
       "status": "live",
-      "water_temperature": 8,
-      "air_temperature": 5,
-      "wind_speed": 3,
+      "water_temperature": 0,
+      "air_temperature": null,
+      "wind_speed": null,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
       },
-      "errors": []
+      "errors": [
+        "weather: fetch failed",
+        "marine: fetch failed"
+      ]
     },
     {
       "id": "amager-strandpark",
@@ -75,13 +85,15 @@
       "longitude": 12.6412,
       "status": "live",
       "water_temperature": 8,
-      "air_temperature": 5,
-      "wind_speed": 3.6,
+      "air_temperature": null,
+      "wind_speed": null,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
       },
-      "errors": []
+      "errors": [
+        "weather: fetch failed"
+      ]
     },
     {
       "id": "kbh-sv",
@@ -89,14 +101,17 @@
       "latitude": 55.6485,
       "longitude": 12.5485,
       "status": "live",
-      "water_temperature": 8,
-      "air_temperature": 5,
-      "wind_speed": 3.4,
+      "water_temperature": 0,
+      "air_temperature": null,
+      "wind_speed": null,
       "source": {
         "weather": "Open-Meteo Forecast API",
         "marine": "Open-Meteo Marine API"
       },
-      "errors": []
+      "errors": [
+        "weather: fetch failed",
+        "marine: fetch failed"
+      ]
     }
   ]
 }
